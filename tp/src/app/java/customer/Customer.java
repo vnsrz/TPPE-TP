@@ -16,4 +16,17 @@ public class Customer {
     public String getName() {
         return this.name;
     }
+
+    public CustomerType getType() {
+        return this.type;
+    }
+
+    public String getState() {
+        return this.state;
+    }
+
+    public boolean isCapital() {
+        return this.isCapital;
+    }
+}
 }
