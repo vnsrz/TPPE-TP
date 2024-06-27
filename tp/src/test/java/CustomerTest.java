@@ -10,4 +10,11 @@ public class CustomerTest {
         Customer customer = new Customer("Joao", CustomerType.STANDARD, "Brasilia", true);
         assertEquals("Joao", customer.getName());
     }
+
+    @Test
+    public void testCreateCustomerWithNameLower() {
+        Customer customer = new Customer("maria", CustomerType.STANDARD, "gama", true);
+        assertEquals("maria", customer.getName());
+    }
+
 }
