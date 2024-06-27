@@ -1,55 +1,51 @@
-import customer.Customer;
-import customer.CustomerType;
+package customer;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+@RunWith(Parameterized.class)
 public class CustomerTest {
 
-    @Test
-    public void testCreateCustomerWithName() {
-        Customer customer = new Customer("Joao", CustomerType.STANDARD, "Brasilia", true);
-        assertEquals("Joao", customer.getName());
+    private String testName;
+    private CustomerType testType;
+    private String testState;
+    private boolean testIsCapital;
+
+    public CustomerTest(String testName, CustomerType testType, String testState, boolean testIsCapital) {
+        this.testName = testName;
+        this.testType = testType;
+        this.testState = testState;
+        this.testIsCapital = testIsCapital;
+    }
+
+    @Parameters(name = "{index}: Customer({0}, {1}, {2}, {3})")
+    public static Collection<Object[]> parameters() {
+        return Arrays.asList(new Object[][] {
+                {"Joao", CustomerType.STANDARD, "Brasilia", true},
+                {"Maria", CustomerType.STANDARD, "Gama", true},
+                {"Carlos", CustomerType.SPECIAL, "Recanto", true},
+                {"Jessica", CustomerType.PRIME, "Taguatinga", true},
+                {"Pedro", CustomerType.STANDARD, "Lago Sul", true},
+                {"Leandro", CustomerType.STANDARD, "Sobradinho", true},
+                {"Jao", CustomerType.STANDARD, "Ceilandia", true},
+                {"Joao", CustomerType.STANDARD, "Paranoa", false}
+        });
     }
 
     @Test
-    public void testCreateCustomerWithDifferentName() {
-        Customer customer = new Customer("Maria", CustomerType.STANDARD, "Gama", true);
-        assertEquals("Maria", customer.getName());
-    }
+    public void testCustomer() {
+        Customer customer = new Customer(testName, testType, testState, testIsCapital);
 
-    @Test
-    public void testCreateCustomerWithType() {
-        Customer customer = new Customer("Carlos", CustomerType.SPECIAL, "Recanto", true);
-        assertEquals(CustomerType.SPECIAL, customer.getType());
-    }
-
-    @Test
-    public void testCreateCustomerWithDifferentType() {
-        Customer customer = new Customer("Jessica", CustomerType.PRIME, "Taguatinga", true);
-        assertEquals(CustomerType.PRIME, customer.getType());
-    }
-
-    @Test
-    public void testCustomerState() {
-        Customer customer = new Customer("Pedro", CustomerType.STANDARD, "Lago Sul", true);
-        assertEquals("Lago Sul", customer.getState());
-    }
-
-    @Test
-    public void testCustomerWithDifferentState() {
-        Customer customer = new Customer("Leandro", CustomerType.STANDARD, "Sobradinho", true);
-        assertEquals("Sobradinho", customer.getState());
-    }
-
-    @Test
-    public void testCustomerIsCapital() {
-        Customer customer = new Customer("Jao", CustomerType.STANDARD, "Ceilandia", true);
-        assertTrue(customer.isCapital());
-    }
-
-    @Test
-    public void testCustomerIsNotCapital() {
-        Customer customer = new Customer("Joao", CustomerType.STANDARD, "Paronoa", false);
-        assertFalse(customer.isCapital());
+        assertEquals(testName, customer.getName());
+        assertEquals(testType, customer.getType());
+        assertEquals(testState, customer.getState());
+        assertEquals(testIsCapital, customer.isCapital());
     }
 }
