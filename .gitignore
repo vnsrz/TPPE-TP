@@ -11,3 +11,4 @@ TPPE-TP.iml
 tp/target/surefire-reports/test.java.app.AppTest.txt
 tp/target/
 .idea/*
+.out/*
