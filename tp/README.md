@@ -1,18 +1,36 @@
-## Getting Started
+# Guia para Compilar, Executar e Testar o Projeto
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+### 1. Compilar o Projeto
+```bash
+java .\src\app\java\main\App.java
+```
 
-## Folder Structure
+### 2. Executar os testes
+```bash
+java -classpath ".;src/app/java/main;app/java/resources;src/test/java;src/lib/junit-4.13.2.jar" org.junit.runner.JUnitCore test.java.app.AppTest
+```
 
-The workspace contains two folders by default, where:
+# Guia para Compilar, Executar e Testar o Projeto com o Maven
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+### 1. Pré-requisitos
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+- Maven
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### 2. Compilar o Projeto
 
-## Dependency Management
+```bash
+mvn clean compile
+```
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### 3. Executar o Projeto
+
+```bash
+mvn exec:java
+```
+
+### 4. Executar os Testes
+
+```bash
+mvn test
+```
+
