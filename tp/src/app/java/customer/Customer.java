@@ -29,4 +29,3 @@ public class Customer {
         return this.isCapital;
     }
 }
-}
