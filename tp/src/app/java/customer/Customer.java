@@ -14,11 +14,6 @@ public class Customer {
     }
 
     public String getName() {
-        if (this.name.equals("Joao")){
-            return "Joao";
-        }
-        else{
-            return "maria";
-        }
+        return this.name;
     }
 }
