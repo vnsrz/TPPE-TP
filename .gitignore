@@ -12,3 +12,6 @@ tp/target/surefire-reports/test.java.app.AppTest.txt
 tp/target/
 .idea/*
 .out/*
+tp/.vscode*
+tp/bin/*
+tp/lib/*
