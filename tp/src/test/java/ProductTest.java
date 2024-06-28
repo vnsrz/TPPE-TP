@@ -4,8 +4,14 @@ import static org.junit.Assert.*;
 
 public class ProductTest {
     @Test
-    public void testCreateProduct() {
+    public void testCreateProductCode() {
         Product product = new Product(1, "Bola de praia", 15.5, "unidade");
         assertEquals(1, product.getCode());
+    }
+
+    @Test
+    public void testCreateProductDescription() {
+        Product product = new Product(2, "Bastão de cola", 5, "unidade");
+        assertEquals("Bastão de cola", product.getDescription());
     }
 }
