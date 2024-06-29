@@ -5,19 +5,29 @@ import java.util.List;
 import utils.Resources;
 import customer.Customer;
 import customer.CustomerType;
+import product.Product;
 
 public class Menu {
     private final List<Customer> customers;
+    private final List<Product> products;
 
     public Menu() {
         customers = new ArrayList<>();
         seedCustomers();
+        products = new ArrayList<>();
+        seedProducts();
     }
 
     private void seedCustomers() {
         customers.add(new Customer("João", CustomerType.STANDARD, "Brasília", true));
         customers.add(new Customer("Maria", CustomerType.SPECIAL, "Rio de Janeiro", false));
         customers.add(new Customer("Pedro", CustomerType.PRIME, "São Paulo", true));
+    }
+
+    private void seedProducts() {
+        products.add(new Product(1, "Bola de praia", 15.5, "unidade"));
+        products.add(new Product(2, "Bastão de cola", 5, "unidade"));
+        products.add(new Product(3, "Tecido azul", 9.99, "metro"));
     }
 
     public void start() {
@@ -31,9 +41,9 @@ public class Menu {
             System.out.println("4. Calcular vendas do último mês para cada cliente");
             System.out.println("5. Verificar status de cliente especial");
             System.out.println("6. Calcular saldo de cashback para clientes prime");
+            System.out.println("7. Lista Clientes");
+            System.out.println("8. Lista Produtos");
             System.out.println("0. Sair");
-            System.out.println("9. Lista Clientes");
-            System.out.print("\nEscolha uma opção: ");
 
             int choice = Resources.readInt("Escolha uma opção");
 
@@ -42,7 +52,7 @@ public class Menu {
                     registerCustomer();
                     break;
                 case 2:
-                    System.out.println("Não implementado");
+                    registerProduct();
                     break;
                 case 3:
                     System.out.println("Não implementado");
@@ -56,9 +66,12 @@ public class Menu {
                 case 6:
                     System.out.println("Não implementado");
                     break;
-                case 9:
+                case 7:
                     listCustomers();
                     break;
+                case 8:
+                    listProducts();
+                    break;    
                 case 0:
                     System.out.println("Saindo do sistema...");
                     return;
@@ -92,6 +105,20 @@ public class Menu {
         System.out.println("Cliente cadastrado com sucesso!");
     }
 
+    private void registerProduct() {
+        System.out.println("\nCadastro de Produto:");
+
+        int code = Resources.readInt("Código");
+        String description = Resources.readString("Descrição");
+        double price = Resources.readDouble("Preço");
+        String unit = Resources.readString("Unidade");
+        
+        Product newProduct = new Product(code, description, price, unit);
+        products.add(newProduct);
+
+        System.out.println("Produto cadastrado com sucesso!");
+    }
+
     private void listCustomers() {
         System.out.println("\nLista de Clientes:");
 
@@ -105,6 +132,24 @@ public class Menu {
                 System.out.println("Tipo: " + customer.getType());
                 System.out.println("Estado: " + customer.getState());
                 System.out.println("Capital: " + (customer.isCapital() ? "Sim" : "Não"));
+                System.out.println("------------------------------");
+            }
+        }
+    }
+
+    private void listProducts() {
+        System.out.println("\nLista de Produtos:");
+
+        if (products.isEmpty()) {
+            System.out.println("Nenhum produto cadastrado.");
+        } else {
+            for (int i = 0; i < products.size(); i++) {
+                Product product = products.get(i);
+                System.out.println("Produto " + (i + 1) + ":");
+                System.out.println("Codigo: " + product.getCode());
+                System.out.println("Descrição: " + product.getDescription());
+                System.out.println("Preço: " + product.getPrice());
+                System.out.println("Unidade: " + product.getUnit());
                 System.out.println("------------------------------");
             }
         }

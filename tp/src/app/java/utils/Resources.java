@@ -16,6 +16,11 @@ public class Resources {
         return scanner.nextInt();
     }
 
+    public static double readDouble(String prompt) {
+        System.out.print(prompt + ": ");
+        return scanner.nextDouble();
+    }
+
     public static boolean readBoolean(String prompt) {
         return readBoolean(prompt, true);
     }
