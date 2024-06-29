@@ -6,7 +6,6 @@ import java.util.List;
 
 import customer.Customer;
 import customer.CustomerType;
-import sales.Sale;
 import utils.Resources;
 
 public class Menu {
@@ -19,25 +18,24 @@ public class Menu {
 
     private void seedCustomers() {
         Customer joao = new Customer("João", CustomerType.STANDARD, "Brasília", true);
-        joao.addSale(new Sale(500.0, LocalDate.now().minusDays(10)));
-        joao.addSale(new Sale(200.0, LocalDate.now().minusDays(15)));
+        joao.addSale(LocalDate.now().minusDays(10), 500.0);
+        joao.addSale(LocalDate.now().minusDays(15), 200.0);
         customers.add(joao);
 
         Customer maria = new Customer("Maria", CustomerType.SPECIAL, "Rio de Janeiro", false);
-        maria.addSale(new Sale(1200.0, LocalDate.now().minusDays(20)));
+        maria.addSale(LocalDate.now().minusDays(20), 1200.0);
         customers.add(maria);
 
         Customer pedro = new Customer("Pedro", CustomerType.PRIME, "São Paulo", true);
-        pedro.addSale(new Sale(800.0, LocalDate.now().minusDays(30)));
-        pedro.addSale(new Sale(400.0, LocalDate.now().minusDays(5)));
+        pedro.addSale(LocalDate.now().minusDays(30), 800.0);
+        pedro.addSale(LocalDate.now().minusDays(5), 400.0);
         customers.add(pedro);
 
         Customer Bruna = new Customer("Bruna", CustomerType.SPECIAL, "São Paulo", true);
-        Bruna.addSale(new Sale(800.0, LocalDate.now().minusDays(30)));
-        Bruna.addSale(new Sale(400.0, LocalDate.now().minusDays(5)));
+        Bruna.addSale(LocalDate.now().minusDays(30), 800.0);
+        Bruna.addSale(LocalDate.now().minusDays(5), 400.0);
         customers.add(Bruna);
-        //customers.add(new Customer("Maria", CustomerType.SPECIAL, "Rio de Janeiro", false));
-        //customers.add(new Customer("Pedro", CustomerType.PRIME, "São Paulo", true));
+        
     }
 
     public void start() {

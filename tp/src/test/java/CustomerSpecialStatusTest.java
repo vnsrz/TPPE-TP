@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import customer.Customer;
 import customer.CustomerType;
-import sales.Sale;
 
 @RunWith(Parameterized.class)
 public class CustomerSpecialStatusTest {
@@ -24,16 +23,17 @@ public class CustomerSpecialStatusTest {
     @Before
     public void setUp() {
         customer = new Customer("Test Customer", CustomerType.STANDARD, "Test State", false);
-        customer.addSale(new Sale(salesAmount, LocalDate.now().minusDays(10)));
+        LocalDate saleDate = LocalDate.now().minusDays(10); // Exemplo de data para a venda
+        customer.addSale(saleDate, salesAmount);
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
-            { 500.0, false },    // Cliente não elegível (valor menor que o limite)
-            { 1000.0, false },   // Cliente não elegível (valor igual ao limite)
-            { 1500.0, true },    // Cliente elegível (valor acima do limite)
-            { 2000.0, true }     // Cliente elegível (valor acima do limite)
+            { 500.0, false },    
+            { 1000.0, false },   
+            { 1500.0, true },    
+            { 2000.0, true }    
         });
     }
 

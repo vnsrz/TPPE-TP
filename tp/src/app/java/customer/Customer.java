@@ -36,7 +36,8 @@ public class Customer {
     public boolean isCapital() {
         return this.isCapital;
     }
-    public void addSale(Sale sale) {
+    public void addSale(LocalDate date, double amount) {
+        Sale sale = new Sale(amount, date);
         sales.add(sale);
     }
      public double getSalesLastMonth() {
