@@ -20,6 +20,6 @@ public class Product {
     }
 
     public double getPrice() {
-        return 9.99;
+        return this.price;
     }
 }
