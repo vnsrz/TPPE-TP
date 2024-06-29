@@ -18,6 +18,6 @@ public class ProductTest {
     @Test
     public void testCreateProductPrice() {
         Product product = new Product(3, "Tecido azul", 9.99, "metro");
-        assertEquals(9.99, product.getPrice());
+        assertEquals(9.99, product.getPrice(), 0);
     }
 }

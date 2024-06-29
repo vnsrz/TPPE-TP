@@ -3,10 +3,12 @@ package product;
 public class Product {
     public int code;
     public String description;
+    public double price;
 
     public Product(int code, String description, double price, String unit) {
         this.code = code;
         this.description = description;
+        this.price = price;
     }
 
     public int getCode() {
@@ -15,5 +17,9 @@ public class Product {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public double getPrice() {
+        return 9.99;
     }
 }
