@@ -1,5 +1,6 @@
 package menu;
 
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Resources;
@@ -81,6 +82,15 @@ public class Menu {
         }
     }
 
+    public boolean hasProductWithCode(int code) {
+        for (Product product : products) {
+            if (product.getCode() == code) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void registerCustomer() {
         System.out.println("\nCadastro de Cliente:");
 
@@ -109,6 +119,10 @@ public class Menu {
         System.out.println("\nCadastro de Produto:");
 
         int code = Resources.readInt("Código");
+        while(hasProductWithCode(code)){
+            System.out.println("\nCódigo já cadastrado.");
+            code = Resources.readInt("Digite outro código");
+        }
         String description = Resources.readString("Descrição");
         double price = Resources.readDouble("Preço");
         String unit = Resources.readString("Unidade");
