@@ -20,4 +20,10 @@ public class ProductTest {
         Product product = new Product(3, "Tecido azul", 9.99, "metro");
         assertEquals(9.99, product.getPrice(), 0);
     }
+
+    @Test
+    public void testCreateProductUnit() {
+        Product product = new Product(4, "Corda trançada", 5, "metro");
+        assertEquals("metro", product.getUnit());
+    }
 }
