@@ -14,4 +14,10 @@ public class ProductTest {
         Product product = new Product(2, "Bastão de cola", 5, "unidade");
         assertEquals("Bastão de cola", product.getDescription());
     }
+
+    @Test
+    public void testCreateProductPrice() {
+        Product product = new Product(3, "Tecido azul", 9.99, "metro");
+        assertEquals(9.99, product.getPrice());
+    }
 }
