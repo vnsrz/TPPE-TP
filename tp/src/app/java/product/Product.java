@@ -26,6 +26,6 @@ public class Product {
     }
 
     public String getUnit() {
-        return "metro";
+        return this.unit;
     }
 }
