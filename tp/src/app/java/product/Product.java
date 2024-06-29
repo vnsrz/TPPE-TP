@@ -14,6 +14,6 @@ public class Product {
     }
 
     public String getDescription() {
-        return "Bastão de cola";
+        return this.description;
     }
 }
