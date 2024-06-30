@@ -6,6 +6,7 @@ import java.util.List;
 
 import customer.Customer;
 import customer.CustomerType;
+import indicator.RegionType;
 import utils.Resources;
 
 public class Menu {
@@ -17,21 +18,21 @@ public class Menu {
     }
 
     private void seedCustomers() {
-        Customer joao = new Customer("João", CustomerType.STANDARD, "Brasília", true);
+        Customer joao = new Customer("João", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL, true);
         joao.addSale(LocalDate.now().minusDays(10), 500.0);
         joao.addSale(LocalDate.now().minusDays(15), 200.0);
         customers.add(joao);
 
-        Customer maria = new Customer("Maria", CustomerType.SPECIAL, "Rio de Janeiro", false);
+        Customer maria = new Customer("Maria", CustomerType.SPECIAL, RegionType.SUDESTE, false);
         maria.addSale(LocalDate.now().minusDays(20), 1200.0);
         customers.add(maria);
 
-        Customer pedro = new Customer("Pedro", CustomerType.PRIME, "São Paulo", true);
+        Customer pedro = new Customer("Pedro", CustomerType.PRIME, RegionType.CENTRO_OESTE, true);
         pedro.addSale(LocalDate.now().minusDays(30), 800.0);
         pedro.addSale(LocalDate.now().minusDays(5), 400.0);
         customers.add(pedro);
 
-        Customer Bruna = new Customer("Bruna", CustomerType.SPECIAL, "São Paulo", true);
+        Customer Bruna = new Customer("Bruna", CustomerType.SPECIAL, RegionType.SUDESTE, true);
         Bruna.addSale(LocalDate.now().minusDays(30), 800.0);
         Bruna.addSale(LocalDate.now().minusDays(5), 400.0);
         customers.add(Bruna);
@@ -101,7 +102,7 @@ public class Menu {
             }
         };
 
-        String state = Resources.readString("Estado");
+        RegionType state = RegionType.CENTRO_OESTE;
         boolean isCapital = Resources.readBoolean("É capital? (0 - Sim / 1 - Não)");
 
         Customer newCustomer = new Customer(name, type, state, isCapital);

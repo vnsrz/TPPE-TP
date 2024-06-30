@@ -1,5 +1,6 @@
 package customer;
 
+import indicator.RegionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -15,10 +16,10 @@ public class CustomerTest {
 
     private String testName;
     private CustomerType testType;
-    private String testState;
+    private RegionType testState;
     private boolean testIsCapital;
 
-    public CustomerTest(String testName, CustomerType testType, String testState, boolean testIsCapital) {
+    public CustomerTest(String testName, CustomerType testType, RegionType testState, boolean testIsCapital) {
         this.testName = testName;
         this.testType = testType;
         this.testState = testState;
@@ -28,14 +29,14 @@ public class CustomerTest {
     @Parameters(name = "{index}: Customer({0}, {1}, {2}, {3})")
     public static Collection<Object[]> parameters() {
         return Arrays.asList(new Object[][] {
-                {"Joao", CustomerType.STANDARD, "Brasilia", true},
-                {"Maria", CustomerType.STANDARD, "Gama", true},
-                {"Carlos", CustomerType.SPECIAL, "Recanto", true},
-                {"Jessica", CustomerType.PRIME, "Taguatinga", true},
-                {"Pedro", CustomerType.STANDARD, "Lago Sul", true},
-                {"Leandro", CustomerType.STANDARD, "Sobradinho", true},
-                {"Jao", CustomerType.STANDARD, "Ceilandia", true},
-                {"Joao", CustomerType.STANDARD, "Paranoa", false}
+                {"Joao", CustomerType.STANDARD, RegionType.SUL, true},
+                {"Maria", CustomerType.STANDARD, RegionType.NORTE, true},
+                {"Carlos", CustomerType.SPECIAL, RegionType.SUDESTE, true},
+                {"Jessica", CustomerType.PRIME, RegionType.CENTRO_OESTE, true},
+                {"Pedro", CustomerType.STANDARD, RegionType.NORDESTE, true},
+                {"Leandro", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL, true},
+                {"Jao", CustomerType.STANDARD, RegionType.SUL, true},
+                {"Joao", CustomerType.STANDARD, RegionType.NORDESTE, false}
         });
     }
 

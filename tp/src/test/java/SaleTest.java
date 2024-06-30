@@ -1,6 +1,7 @@
 import Sale.Sale;
 import customer.Customer;
 import customer.CustomerType;
+import indicator.RegionType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +37,11 @@ public class SaleTest {
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product(1, "Bicicleta",300,"unidade"));
         products.add(new Product(2,"Camisa",50,"unidade"));
-        Customer customer1 = new Customer("Juliana", CustomerType.STANDARD, "Valparaiso",false);
-        Customer customer2 = new Customer("Maria", CustomerType.STANDARD, "Gama", true);
-        Customer customer3 = new Customer("Jessica", CustomerType.PRIME, "Taguatinga", true);
-        Customer customer4 = new Customer("Leandro", CustomerType.STANDARD, "Sobradinho", true);
-        Customer customer5 = new Customer("Julia", CustomerType.STANDARD, "",false);
+        Customer customer1 = new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false);
+        Customer customer2 = new Customer("Maria", CustomerType.STANDARD, RegionType.NORDESTE, true);
+        Customer customer3 = new Customer("Jessica", CustomerType.PRIME, RegionType.SUL, true);
+        Customer customer4 = new Customer("Leandro", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL, true);
+        Customer customer5 = new Customer("Julia", CustomerType.STANDARD, RegionType.NORTE,false);
 
         return Arrays.asList(new Object[][] {
                 {Date.from(Instant.parse("2010-12-07T10:15:30.00Z")), customer1, products, "0234567890123456"},

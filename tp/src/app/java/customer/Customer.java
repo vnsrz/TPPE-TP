@@ -1,6 +1,7 @@
 package customer;
 
 import java.util.List;
+import indicator.RegionType;
 import sales.Sale;
 
 import java.time.LocalDate;
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 public class Customer {
     private String name;
     private CustomerType type;
-    private String state;
+    private RegionType state;
     private boolean isCapital;
     private final List<Sale> sales;
 
-    public Customer(String name, CustomerType type, String state, boolean isCapital) {
+    public Customer(String name, CustomerType type, RegionType state, boolean isCapital) {
         this.name = name;
         this.type = type;
         this.state = state;
@@ -29,7 +30,7 @@ public class Customer {
         return this.type;
     }
 
-    public String getState() {
+    public RegionType getState() {
         return this.state;
     }
 
