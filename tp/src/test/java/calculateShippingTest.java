@@ -20,14 +20,14 @@ public class calculateShippingTest {
     public void testCalculateShipping() {
         Customer customerA = new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 10);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 13);
 
     }
     @Test
     public void testCalculateShippingOtherRegion() {
         Customer customerA = new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 20);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 25);
 
     }
 
@@ -35,7 +35,7 @@ public class calculateShippingTest {
     public void testCalculateShippingSouth() {
         Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUL,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 10);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 13);
 
     }
 
@@ -45,4 +45,27 @@ public class calculateShippingTest {
 
         Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 15);
     }
+
+    @Test
+    public void testCalculateShippingCapitalOtherRegion() {
+        Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,true);
+
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 7);
+    }
+
+    @Test
+    public void TestCalculatehippingNotCapital() {
+        Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.NORTE,false);
+
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 25);
+    }
+
+    @Test
+    public void testCalculateShippingNotCapitalOtherRegion() {
+        Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,false);
+
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 10);
+    }
+
+
 }

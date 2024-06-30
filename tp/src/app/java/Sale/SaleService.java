@@ -23,11 +23,11 @@ public class SaleService {
 
     public int calculateShipping(RegionType region, boolean isCapital) {
         switch (region) {
-            case CENTRO_OESTE, SUL: return 10;
-            case NORTE: return 20;
+            case CENTRO_OESTE, SUL: return isCapital ? 10 : 13;
+            case NORTE: return isCapital? 20 : 25;
             case NORDESTE: return isCapital ? 15 : 18;
             case DISTRITO_FEDERAL: return 5;
-            case SUDESTE: return 7;
+            case SUDESTE: return isCapital ? 7 : 10;
             default: return 0;
         }
     }
