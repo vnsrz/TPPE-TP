@@ -38,7 +38,7 @@ public class SaleServiceTest {
 
         saleService.addSale(sale);
 
-        Assert.assertEquals(saleService.getSale(sale), sale);
+        Assert.assertEquals(saleService.getSales(), sale);
     }
 
 }
