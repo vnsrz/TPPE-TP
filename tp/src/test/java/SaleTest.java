@@ -3,95 +3,61 @@ import customer.Customer;
 import customer.CustomerType;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import product.Product;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
+@RunWith(Parameterized.class)
 public class SaleTest {
 
-    @Test
-    public void testGetSaleDate() {
+    private Date testDate;
+    private Customer testCustomer;
+    private ArrayList<Product> testProduct;
+    private String testPaymentMethod;
+
+
+    public SaleTest(Date testDate, Customer testCustomer, ArrayList<Product> testProduct, String testPaymentMethod) {
+        this.testDate = testDate;
+        this.testCustomer = testCustomer;
+        this.testProduct = testProduct;
+        this.testPaymentMethod = testPaymentMethod;
+    }
+
+    @Parameters(name = "{index}: Customer({0}, {1}, {2}, {3})")
+    public static Collection<Object[]> parameters() {
+
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product(1, "Bicicleta",300,"unidade"));
         products.add(new Product(2,"Camisa",50,"unidade"));
-        Customer costumer = new Customer("Julia", CustomerType.STANDARD, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.parse("2019-12-03T10:15:30.00Z")),costumer, products, "1234567890123456");
-        Assert.assertEquals(sale.getDate(), Date.from(Instant.parse("2019-12-03T10:15:30.00Z")));
+        Customer customer1 = new Customer("Juliana", CustomerType.STANDARD, "Valparaiso",false);
+        Customer customer2 = new Customer("Maria", CustomerType.STANDARD, "Gama", true);
+        Customer customer3 = new Customer("Jessica", CustomerType.PRIME, "Taguatinga", true);
+        Customer customer4 = new Customer("Leandro", CustomerType.STANDARD, "Sobradinho", true);
+        Customer customer5 = new Customer("Julia", CustomerType.STANDARD, "",false);
+
+        return Arrays.asList(new Object[][] {
+                {Date.from(Instant.parse("2010-12-07T10:15:30.00Z")), customer1, products, "0234567890123456"},
+                {Date.from(Instant.parse("2014-06-11T10:15:30.00Z")), customer2, products, "2234567890123456"},
+                {Date.from(Instant.parse("2023-11-13T10:15:30.00Z")), customer3, products, "3234567890123456"},
+                {Date.from(Instant.parse("2024-02-25T10:15:30.00Z")), customer4, products, "41234567890123456"},
+                {Date.from(Instant.parse("2020-01-14T10:15:30.00Z")), customer5, products, "5234567890123456"},
+        });
     }
-
     @Test
-    public void testGetDifferentSaleDate() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-        Customer costumer = new Customer("Julia", CustomerType.STANDARD, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.parse("2024-12-14T10:15:30.00Z")), costumer, products,"1234567890123456");
-        Assert.assertEquals(sale.getDate(), Date.from(Instant.parse("2024-12-14T10:15:30.00Z")));
-    }
-    @Test
-    public void testGetCustomer() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-        Customer costumer = new Customer("Julia", CustomerType.STANDARD, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer, products, "1234567890123456");
-        Assert.assertEquals(sale.getCustomer(), costumer);
+    public void testSale() {
+        Sale sale = new Sale(testDate, testCustomer,testProduct,testPaymentMethod);
 
-    }
-
-    @Test
-    public void testGetCustomerPrime() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-        Customer costumer = new Customer("Julia", CustomerType.PRIME, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer, products, "1234567890123456");
-        Assert.assertEquals(sale.getCustomer(), costumer);
-    }
-
-    @Test
-    public void testGetProducts() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-
-        Customer costumer = new Customer("Julia", CustomerType.PRIME, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer,products, "1234567890123456");
-        Assert.assertEquals(sale.getProduct(), products);
-    }
-
-    @Test
-    public void testGetProduct() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-
-        Customer costumer = new Customer("Julia", CustomerType.PRIME, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer,products, "1234567890123456");
-        Assert.assertEquals(sale.getProduct(), products);
-    }
-
-    @Test
-    public void testGetPaymentMethod() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-
-        Customer costumer = new Customer("Julia", CustomerType.PRIME, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer,products, "1234567890123456");
-        Assert.assertEquals(sale.getPaymentMethod(), "1234567890123456");
-    }
-
-    @Test
-    public void testGetDifferentPaymentMethod() {
-        ArrayList<Product> products = new ArrayList<>();
-        products.add(new Product(1, "Bicicleta",300,"unidade"));
-        products.add(new Product(2,"Camisa",50,"unidade"));
-
-        Customer costumer = new Customer("Julia", CustomerType.PRIME, "GO",false);
-        Sale sale = new Sale(Date.from(Instant.now()), costumer,products, "1234567890123478");
-        Assert.assertEquals(sale.getPaymentMethod(), "1234567890123478");
+        Assert.assertEquals(sale.getDate(), testDate);
+        Assert.assertEquals(sale.getCustomer(), testCustomer);
+        Assert.assertEquals(sale.getProduct(), testProduct);
+        Assert.assertEquals(sale.getPaymentMethod(), testPaymentMethod);
     }
 
 
