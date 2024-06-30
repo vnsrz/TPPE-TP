@@ -1,5 +1,7 @@
 package Sale;
 
+import indicator.RegionType;
+
 import java.util.ArrayList;
 
 public class SaleService {
@@ -17,5 +19,9 @@ public class SaleService {
 
     public ArrayList<Sale> getSales() {
         return this.sales;
+    }
+
+    public int calculateShipping(RegionType region) {
+        return 10;
     }
 }
