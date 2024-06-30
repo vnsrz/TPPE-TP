@@ -1,5 +1,6 @@
 package Sale;
 
+import customer.CustomerType;
 import indicator.RegionType;
 
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public class SaleService {
         return this.sales;
     }
 
-    public int calculateShipping(RegionType region, boolean isCapital) {
+    public int calculateShipping(RegionType region, boolean isCapital, CustomerType customerType) {
+        if(customerType.name().equals(CustomerType.PRIME.name())) return 0;
+
         switch (region) {
             case CENTRO_OESTE, SUL: return isCapital ? 10 : 13;
             case NORTE: return isCapital? 20 : 25;

@@ -32,8 +32,8 @@ public class CalculateShippingTest {
         return new Object[][] {
                 { new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,true), 10},
                 { new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false), 13},
-                { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,false), 25},
-                { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,true), 20},
+                { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,false), 0},
+                { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,true), 0},
                 { new Customer("Andre", CustomerType.SPECIAL, RegionType.SUL, true), 10},
                 { new Customer("Andre", CustomerType.SPECIAL, RegionType.SUL, false), 13},
                 { new Customer("Maria", CustomerType.SPECIAL, RegionType.NORDESTE, true), 15},
@@ -49,7 +49,7 @@ public class CalculateShippingTest {
 
     @Test
     public void testCalculateShipping() {
-        Assert.assertEquals(saleService.calculateShipping(customer.getState(),customer.isCapital()), shippingResult);
+        Assert.assertEquals(saleService.calculateShipping(customer.getState(),customer.isCapital(), customer.getType()), shippingResult);
     }
 
 
