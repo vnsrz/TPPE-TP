@@ -20,14 +20,14 @@ public class calculateShippingTest {
     public void testCalculateShipping() {
         Customer customerA = new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 10);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 10);
 
     }
     @Test
     public void testCalculateShippingOtherRegion() {
         Customer customerA = new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 20);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 20);
 
     }
 
@@ -35,7 +35,7 @@ public class calculateShippingTest {
     public void testCalculateShippingSouth() {
         Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUL,false);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 10);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 10);
 
     }
 
@@ -43,6 +43,6 @@ public class calculateShippingTest {
     public void testCalculateShippingCapital() {
         Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.NORDESTE,true);
 
-        Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 18);
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState(),customerA.isCapital()), 15);
     }
 }
