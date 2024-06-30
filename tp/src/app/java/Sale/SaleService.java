@@ -22,6 +22,6 @@ public class SaleService {
     }
 
     public int calculateShipping(RegionType region) {
-        return 10;
+        return RegionType.CENTRO_OESTE.name().equals(region.name()) ? 10 : 20;
     }
 }
