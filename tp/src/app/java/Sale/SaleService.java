@@ -4,13 +4,18 @@ import java.util.ArrayList;
 
 public class SaleService {
 
-    private Sale sales;
+    private ArrayList<Sale> sales;
 
-    public void addSale(Sale sale) {
-        this.sales = sale;
+    public SaleService() {
+        this.sales = new ArrayList<>();
     }
 
-    public Sale getSales() {
+
+    public void addSale(Sale sale) {
+        this.sales.add(sale);
+    }
+
+    public ArrayList<Sale> getSales() {
         return this.sales;
     }
 }
