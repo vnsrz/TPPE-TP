@@ -22,6 +22,14 @@ public class SaleService {
     }
 
     public int calculateShipping(RegionType region) {
-        return RegionType.CENTRO_OESTE.name().equals(region.name()) ? 10 : 20;
+        switch (region) {
+            case CENTRO_OESTE: return 10;
+            case NORTE: return 20;
+            case NORDESTE: return 15;
+            case SUL: return 10;
+            case DISTRITO_FEDERAL: return 5;
+            case SUDESTE: return 7;
+            default: return 0;
+        }
     }
 }

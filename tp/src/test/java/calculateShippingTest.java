@@ -30,4 +30,12 @@ public class calculateShippingTest {
         Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 20);
 
     }
+
+    @Test
+    public void testCalculateShippingSouth() {
+        Customer customerA = new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUL,false);
+
+        Assert.assertEquals(saleService.calculateShipping(customerA.getState()), 10);
+
+    }
 }
