@@ -13,22 +13,27 @@ public class CalculateDiscountTest {
     }
     @Test
     public void testCalculateDiscount() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.SPECIAL,3000f), 300f, 0.01);
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.SPECIAL,3000f, "429611XXXXXXXXXX"), 300f, 0.01);
     }
 
     @Test
     public void testCalculateDiscountNoSpecial() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.STANDARD,3000f), 0, 0.01);
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.STANDARD,3000f, "429612XXXXXXXXXX"), 0, 0.01);
     }
 
     @Test
     public void testCalculateDiscountNoSpeciala() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f), 0, 0.01);
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f, "529613XXXXXXXXXX"), 0, 0.01);
     }
 
     @Test
     public void testCalculateDiscountWithCreditCard() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f, "429613XXXXXXXXXX"), 600f, 0.01);
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f, "429613XXXXXXXXXX"), 300f, 0.01);
+    }
+
+    @Test
+    public void testCalculateDiscountWithCreditCardAndSpecial() {
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.SPECIAL, 3000f, "429613XXXXXXXXXX"), 600f, 0.01);
     }
 
 

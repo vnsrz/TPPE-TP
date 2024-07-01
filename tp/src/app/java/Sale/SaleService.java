@@ -9,6 +9,8 @@ public class SaleService {
 
     private ArrayList<Sale> sales;
 
+    private final String STORE_CREDIT_CARD = "429613";
+
     public SaleService() {
         this.sales = new ArrayList<>();
     }
@@ -56,7 +58,13 @@ public class SaleService {
         return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f) ;
     }
 
-    public float calculateDiscount(CustomerType customerType, float amount) {
-        return CustomerType.SPECIAL.name().equals(customerType.name()) ? amount * 0.1f : 0;
+    public float calculateDiscount(CustomerType customerType, float amount, String paymentCard) {
+        float discount = 0;
+
+        if (CustomerType.SPECIAL.name().equals(customerType.name())) discount = amount * 0.1f;
+
+        discount += paymentCard.startsWith(STORE_CREDIT_CARD) ? amount * 0.1f : 0;
+
+        return discount;
     }
 }
