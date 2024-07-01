@@ -57,6 +57,6 @@ public class SaleService {
     }
 
     public float calculateDiscount(CustomerType customerType, float amount) {
-        return 300f;
+        return amount * 0.1f;
     }
 }
