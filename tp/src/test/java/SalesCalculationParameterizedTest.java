@@ -1,5 +1,6 @@
 import customer.Customer;
 import customer.CustomerType;
+import indicator.RegionType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -32,7 +33,7 @@ public class SalesCalculationParameterizedTest {
 
     private Customer createCustomerByName(String name) {
         CustomerType type = CustomerType.STANDARD; 
-        String state = "RIO DE JANEIRO"; 
+        RegionType state = RegionType.DISTRITO_FEDERAL;
         boolean isCapital = false; 
     
         Customer customer = new Customer(name, type, state, isCapital);

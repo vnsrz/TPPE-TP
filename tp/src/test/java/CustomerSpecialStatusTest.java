@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
+import indicator.RegionType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +23,7 @@ public class CustomerSpecialStatusTest {
 
     @Before
     public void setUp() {
-        customer = new Customer("Test Customer", CustomerType.STANDARD, "Test State", false);
+        customer = new Customer("Test Customer", CustomerType.STANDARD, RegionType.NORTE, false);
         LocalDate saleDate = LocalDate.now().minusDays(10); // Exemplo de data para a venda
         customer.addSale(saleDate, salesAmount);
     }
