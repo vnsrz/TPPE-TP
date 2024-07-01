@@ -34,4 +34,8 @@ public class SaleService {
             default: return 0;
         }
     }
+
+    public float calculateTax() {
+        return 12;
+    }
 }
