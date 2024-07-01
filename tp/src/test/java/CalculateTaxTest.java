@@ -17,7 +17,13 @@ public class CalculateTaxTest {
     @Test
     public void testCalculateTax() {
         Customer customer1 = new Customer("Henrique", CustomerType.SPECIAL, RegionType.NORTE,false);
-        Assert.assertEquals(saleService.calculateTax(), 12,0);
+        Assert.assertEquals(saleService.calculateTax(customer1.getState(),5000f), 800f,0);
+    }
+
+    @Test
+    public void testCalculateDifferentTax() {
+        Customer customer1 = new Customer("Henrique", CustomerType.SPECIAL, RegionType.DISTRITO_FEDERAL,false);
+        Assert.assertEquals(saleService.calculateTax(customer1.getState(), 10000f), 1800f,0.01);
     }
 
 }

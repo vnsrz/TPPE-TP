@@ -35,7 +35,7 @@ public class SaleService {
         }
     }
 
-    public float calculateTax() {
-        return 12;
+    public float calculateTax(RegionType regionType, float amount) {
+        return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f) ;
     }
 }
