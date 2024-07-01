@@ -57,6 +57,6 @@ public class SaleService {
     }
 
     public float calculateDiscount(CustomerType customerType, float amount) {
-        return amount * 0.1f;
+        return CustomerType.SPECIAL.name().equals(customerType.name()) ? amount * 0.1f : 0;
     }
 }

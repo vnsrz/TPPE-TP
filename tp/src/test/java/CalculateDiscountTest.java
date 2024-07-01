@@ -21,5 +21,10 @@ public class CalculateDiscountTest {
         Assert.assertEquals(saleService.calculateDiscount(CustomerType.STANDARD,3000f), 0, 0.01);
     }
 
+    @Test
+    public void testCalculateDiscountNoSpeciala() {
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f), 0, 0.01)"";
+    }
+
 
 }
