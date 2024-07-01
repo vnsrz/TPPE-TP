@@ -16,11 +16,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 
-// calcular frete
-// calcular descontos
-// calcular impostos
-// calcular cashback
-
 @RunWith(Parameterized.class)
 public class AddSaleTest {
 
