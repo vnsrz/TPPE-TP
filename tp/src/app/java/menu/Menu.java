@@ -1,12 +1,19 @@
 package menu;
 
+
 import java.util.stream.Collectors;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import utils.Resources;
+
 import customer.Customer;
 import customer.CustomerType;
+
 import product.Product;
+
+import indicator.RegionType;
+import utils.Resources;
+
 
 public class Menu {
     private final List<Customer> customers;
@@ -20,9 +27,24 @@ public class Menu {
     }
 
     private void seedCustomers() {
-        customers.add(new Customer("João", CustomerType.STANDARD, "Brasília", true));
-        customers.add(new Customer("Maria", CustomerType.SPECIAL, "Rio de Janeiro", false));
-        customers.add(new Customer("Pedro", CustomerType.PRIME, "São Paulo", true));
+        Customer joao = new Customer("João", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL, true);
+        joao.addSale(LocalDate.now().minusDays(10), 500.0);
+        joao.addSale(LocalDate.now().minusDays(15), 200.0);
+        customers.add(joao);
+
+        Customer maria = new Customer("Maria", CustomerType.SPECIAL, RegionType.SUDESTE, false);
+        maria.addSale(LocalDate.now().minusDays(20), 1200.0);
+        customers.add(maria);
+
+        Customer pedro = new Customer("Pedro", CustomerType.PRIME, RegionType.CENTRO_OESTE, true);
+        pedro.addSale(LocalDate.now().minusDays(30), 800.0);
+        pedro.addSale(LocalDate.now().minusDays(5), 400.0);
+        customers.add(pedro);
+
+        Customer Bruna = new Customer("Bruna", CustomerType.SPECIAL, RegionType.SUDESTE, true);
+        Bruna.addSale(LocalDate.now().minusDays(30), 800.0);
+        Bruna.addSale(LocalDate.now().minusDays(5), 400.0);
+        customers.add(Bruna);
     }
 
     private void seedProducts() {
@@ -59,10 +81,10 @@ public class Menu {
                     System.out.println("Não implementado");
                     break;
                 case 4:
-                    System.out.println("Não implementado");
+                    calculateSalesLastMonth();
                     break;
                 case 5:
-                    System.out.println("Não implementado");
+                    checkSpecialStatus();
                     break;
                 case 6:
                     System.out.println("Não implementado");
@@ -106,7 +128,7 @@ public class Menu {
             }
         };
 
-        String state = Resources.readString("Estado");
+        RegionType state = RegionType.CENTRO_OESTE;
         boolean isCapital = Resources.readBoolean("É capital? (0 - Sim / 1 - Não)");
 
         Customer newCustomer = new Customer(name, type, state, isCapital);
@@ -131,6 +153,22 @@ public class Menu {
         products.add(newProduct);
 
         System.out.println("Produto cadastrado com sucesso!");
+    }
+
+    private void calculateSalesLastMonth() {
+        System.out.println("\nCalculando vendas do último mês para cada cliente:");
+        for (Customer customer : customers) {
+            double salesLastMonth = customer.getSalesLastMonth();
+            System.out.println("Cliente: " + customer.getName() + " - Vendas do último mês: R$ " + salesLastMonth);
+        }
+    }
+
+    private void checkSpecialStatus() {
+        System.out.println("\nVerificando status de clientes especiais:");
+        for (Customer customer : customers) {
+            boolean isSpecialEligible = customer.isEligibleForSpecial();
+            System.out.println("Cliente: " + customer.getName() + " - Elegível para ser especial: " + (isSpecialEligible ? "Sim" : "Não"));
+        }
     }
 
     private void listCustomers() {
