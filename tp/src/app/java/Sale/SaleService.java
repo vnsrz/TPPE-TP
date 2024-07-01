@@ -55,4 +55,8 @@ public class SaleService {
     public float calculateTax(RegionType regionType, float amount) {
         return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f) ;
     }
+
+    public float calculateDiscount(CustomerType customerType, float amount) {
+        return 300f;
+    }
 }

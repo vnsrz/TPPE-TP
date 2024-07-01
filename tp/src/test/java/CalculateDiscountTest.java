@@ -13,7 +13,7 @@ public class CalculateDiscountTest {
     }
     @Test
     public void testCalculateDiscount() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.SPECIAL,3000f), 300f);
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.SPECIAL,3000f), 300f, 0.01);
     }
 
 
