@@ -23,8 +23,14 @@ public class CalculateDiscountTest {
 
     @Test
     public void testCalculateDiscountNoSpeciala() {
-        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f), 0, 0.01)"";
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f), 0, 0.01);
     }
+
+    @Test
+    public void testCalculateDiscountWithCreditCard() {
+        Assert.assertEquals(saleService.calculateDiscount(CustomerType.PRIME, 3000f, "429613XXXXXXXXXX"), 600f, 0.01);
+    }
+
 
 
 }
