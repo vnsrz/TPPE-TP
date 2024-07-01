@@ -15,9 +15,9 @@ public class CalculateShippingTest {
     SaleService saleService;
 
     Customer customer;
-    int shippingResult;
+    float shippingResult;
 
-    public CalculateShippingTest(Customer customer, int shippingResult) {
+    public CalculateShippingTest(Customer customer, float shippingResult) {
         this.customer = customer;
         this.shippingResult = shippingResult;
     }
@@ -34,22 +34,22 @@ public class CalculateShippingTest {
                 { new Customer("Juliana", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false), 13},
                 { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,false), 0},
                 { new Customer("Henrique", CustomerType.PRIME, RegionType.NORTE,true), 0},
-                { new Customer("Andre", CustomerType.SPECIAL, RegionType.SUL, true), 10},
-                { new Customer("Andre", CustomerType.SPECIAL, RegionType.SUL, false), 13},
-                { new Customer("Maria", CustomerType.SPECIAL, RegionType.NORDESTE, true), 15},
-                { new Customer("Maria", CustomerType.SPECIAL, RegionType.NORDESTE, false), 18},
-                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,true), 7},
-                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,false), 10},
-                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.NORTE,false), 25},
-                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE, false), 10},
-                { new Customer("Joao", CustomerType.SPECIAL, RegionType.DISTRITO_FEDERAL,true), 5},
-                { new Customer("Joao", CustomerType.SPECIAL, RegionType.DISTRITO_FEDERAL,false), 5},
+                { new Customer("Andre", CustomerType.PRIME, RegionType.SUL, true), 0},
+                { new Customer("Andre", CustomerType.PRIME, RegionType.SUL, false), 0},
+                { new Customer("Maria", CustomerType.SPECIAL, RegionType.NORDESTE, true), 10.5f},
+                { new Customer("Maria", CustomerType.SPECIAL, RegionType.NORDESTE, false), 12.6f},
+                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,true), 4.9f},
+                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.SUDESTE,false), 7},
+                { new Customer("Henrique", CustomerType.SPECIAL, RegionType.NORTE,false), 17.5f},
+                { new Customer("Henrique", CustomerType.STANDARD, RegionType.SUDESTE, false), 10},
+                { new Customer("Joao", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL,true), 5},
+                { new Customer("Joao", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL,false), 5},
         };
     }
 
     @Test
     public void testCalculateShipping() {
-        Assert.assertEquals(saleService.calculateShipping(customer.getState(),customer.isCapital(), customer.getType()), shippingResult);
+        Assert.assertEquals(saleService.calculateShipping(customer.getState(),customer.isCapital(), customer.getType()), shippingResult, 0.01);
     }
 
 

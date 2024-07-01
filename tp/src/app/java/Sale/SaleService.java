@@ -22,18 +22,35 @@ public class SaleService {
         return this.sales;
     }
 
-    public int calculateShipping(RegionType region, boolean isCapital, CustomerType customerType) {
+    public float calculateShipping(RegionType region, boolean isCapital, CustomerType customerType) {
         if(customerType.name().equals(CustomerType.PRIME.name())) return 0;
 
+        float shippingPrice;
+
         switch (region) {
-            case CENTRO_OESTE, SUL: return isCapital ? 10 : 13;
-            case NORTE: return isCapital? 20 : 25;
-            case NORDESTE: return isCapital ? 15 : 18;
-            case DISTRITO_FEDERAL: return 5;
-            case SUDESTE: return isCapital ? 7 : 10;
-            default: return 0;
+            case CENTRO_OESTE, SUL:
+                shippingPrice = isCapital ? 10 : 13;
+                break;
+            case NORTE:
+                shippingPrice = isCapital? 20 : 25;
+                break;
+            case NORDESTE:
+                shippingPrice = isCapital ? 15 : 18;
+                break;
+            case DISTRITO_FEDERAL:
+                shippingPrice = 5;
+                break;
+            case SUDESTE:
+                shippingPrice = isCapital ? 7 : 10;
+                break;
+            default:
+                shippingPrice = 0;
         }
+
+        return isSpecial(customerType) ? shippingPrice * 0.7f : shippingPrice;
     }
+
+    private Boolean isSpecial(CustomerType customerType) { return CustomerType.SPECIAL.name().equals(customerType.name()); }
 
     public float calculateTax(RegionType regionType, float amount) {
         return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f) ;
