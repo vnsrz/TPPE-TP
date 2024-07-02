@@ -12,7 +12,8 @@ import org.junit.runners.Suite.SuiteClasses;
         CustomerSpecialStatusTest.class,
         CustomerTest.class,
         SalesCalculationParameterizedTest.class,
-        SaleTest.class
+        SaleTest.class,
+        ProcessSaleTest.class
 })
 public class AllTest {
 

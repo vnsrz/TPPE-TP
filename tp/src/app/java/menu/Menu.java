@@ -1,11 +1,16 @@
 package menu;
 
 
+import java.sql.Date;
+import java.time.Instant;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Sale.Sale;
+import Sale.SaleService;
 import customer.Customer;
 import customer.CustomerType;
 
@@ -18,12 +23,14 @@ import utils.Resources;
 public class Menu {
     private final List<Customer> customers;
     private final List<Product> products;
+    private final SaleService saleService;
 
     public Menu() {
         customers = new ArrayList<>();
         seedCustomers();
         products = new ArrayList<>();
         seedProducts();
+        saleService = new SaleService();
     }
 
     private void seedCustomers() {
@@ -78,7 +85,7 @@ public class Menu {
                     registerProduct();
                     break;
                 case 3:
-                    System.out.println("Não implementado");
+                    makeSale();
                     break;
                 case 4:
                     calculateSalesLastMonth();
@@ -94,7 +101,7 @@ public class Menu {
                     break;
                 case 8:
                     listProducts();
-                    break;    
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     return;
@@ -127,11 +134,22 @@ public class Menu {
                 yield CustomerType.STANDARD;
             }
         };
-
-        RegionType state = RegionType.CENTRO_OESTE;
+        int regionChoice = Resources.readInt("Tipo (1 - Norte, 2 - Nordeste, 3 - Centro Oeste, 4 - Sudeste, 5 - SUL, 6 -> DISTRITO FEDERAL)");
+        RegionType regionType = switch (regionChoice) {
+            case 1 -> RegionType.NORTE;
+            case 2 -> RegionType.NORDESTE;
+            case 3 -> RegionType.CENTRO_OESTE;
+            case 4 -> RegionType.SUDESTE;
+            case 5 -> RegionType.SUL;
+            case 6 -> RegionType.DISTRITO_FEDERAL;
+            default -> {
+                System.out.println("Tipo inválido. Será cadastrado como padrão.");
+                yield RegionType.DISTRITO_FEDERAL; // Alterar
+            }
+        };
         boolean isCapital = Resources.readBoolean("É capital? (0 - Sim / 1 - Não)");
 
-        Customer newCustomer = new Customer(name, type, state, isCapital);
+        Customer newCustomer = new Customer(name, type, regionType, isCapital);
         customers.add(newCustomer);
 
         System.out.println("Cliente cadastrado com sucesso!");
@@ -148,7 +166,7 @@ public class Menu {
         String description = Resources.readString("Descrição");
         double price = Resources.readDouble("Preço");
         String unit = Resources.readString("Unidade");
-        
+
         Product newProduct = new Product(code, description, price, unit);
         products.add(newProduct);
 
@@ -189,6 +207,40 @@ public class Menu {
         }
     }
 
+    private void makeSale() {
+        System.out.println("\nRealizando Venda:");
+
+        listProducts();
+
+        int codProduct;
+        do {
+            codProduct = Resources.readInt("Digite o codigo do produto:");
+        }while (!hasProductWithCode(codProduct));
+
+        listCustomers();
+
+        int codCustomer;
+        do {
+            codCustomer = Resources.readInt("Digite o codigo do Cliente:");
+        }while (!hasCustomer(codCustomer));
+
+        Optional<Product> product = findProduct(codProduct);
+        Optional<Customer> customer = findCustomer(codCustomer);
+
+        ArrayList<Product> productList = new ArrayList<>();
+        productList.add(product.get());
+
+        String paymentMethod = Resources.readString("DIGITE O NUMERO DO SEU CARTAO: "); //Melhorar esta leitura
+
+        float result = saleService.processSale(customer.get(),productList, paymentMethod);
+
+        System.out.println("\nVenda Adicionada com sucesso! valor final -\n" + result);
+    }
+
+    private boolean hasCustomer(int codCustomer) {
+        return customers.get(codCustomer) != null;
+    }
+
     private void listProducts() {
         System.out.println("\nLista de Produtos:");
 
@@ -205,5 +257,13 @@ public class Menu {
                 System.out.println("------------------------------");
             }
         }
+    }
+
+    private Optional<Product> findProduct(int code) {
+       return products.stream().filter(f -> code == f.getCode()).collect(Collectors.toList()).stream().findFirst();
+    }
+
+    private Optional <Customer> findCustomer(int code) {
+        return Optional.ofNullable(customers.get(code));
     }
 }
