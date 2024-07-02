@@ -5,7 +5,9 @@ import customer.CustomerType;
 import indicator.RegionType;
 import product.Product;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SaleService {
@@ -71,14 +73,18 @@ public class SaleService {
         return discount;
     }
 
-    public float processSale(Customer customer, List<Product> products, String paymentMethod) {
+    public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
         float amount = 0;
 
         for(Product p : products){
             amount+= p.getPrice();
         }
 
+        amount -= calculateDiscount(customer.getType(), amount, paymentMethod);
+        amount += calculateTax(customer.getState(), amount);
         amount += calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+
+        this.addSale(new Sale(Date.from(Instant.now()), customer, products, paymentMethod, amount));
 
         return amount;
     }
