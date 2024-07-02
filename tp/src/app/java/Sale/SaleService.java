@@ -72,6 +72,12 @@ public class SaleService {
     }
 
     public float processSale(Customer customer, List<Product> products, String paymentMethod) {
-        return products.get(0).getPrice() == 15.5f ? 32.88f : 25.5f;
+        float amount = 0;
+
+        for(Product p : products){
+            amount+= p.getPrice();
+        }
+
+        return amount;
     }
 }

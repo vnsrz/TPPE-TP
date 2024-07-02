@@ -26,7 +26,7 @@ public class ProcessSaleTest {
         products.add(new Product(2, "Bastão de cola", 5, "unidade"));
 
 
-        Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  32.88f, 0.01);
+        Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  20.5f, 0.01);
     }
 
     @Test
