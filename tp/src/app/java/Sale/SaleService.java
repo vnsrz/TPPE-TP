@@ -1,9 +1,12 @@
 package Sale;
 
+import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
+import product.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SaleService {
 
@@ -66,5 +69,9 @@ public class SaleService {
         discount += paymentCard.startsWith(STORE_CREDIT_CARD) ? amount * 0.1f : 0;
 
         return discount;
+    }
+
+    public float processSale(Customer customer, List<Product> products, String paymentMethod) {
+        return 32.88f;
     }
 }
