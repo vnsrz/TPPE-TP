@@ -19,7 +19,7 @@ public class ProcessSaleTest {
     }
 
     @Test
-    public void testProcessSaleTest() {
+    public void testProcessSale() {
         Customer customer = new Customer("Vitor", CustomerType.SPECIAL, RegionType.CENTRO_OESTE,false);
         ArrayList<Product> products = new ArrayList<>();
         products.add(new Product(1, "Bola de praia", 15.5, "unidade"));
@@ -27,6 +27,17 @@ public class ProcessSaleTest {
 
 
         Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  32.88f, 0.01);
+    }
+
+    @Test
+    public void testProcessSalePriceProducts() {
+        Customer customer = new Customer("Vitor", CustomerType.PRIME, RegionType.CENTRO_OESTE,false);
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product(1, "Bola de praia", 20.5, "unidade"));
+        products.add(new Product(2, "Bastão de cola", 5, "unidade"));
+
+
+        Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  25.5f, 0.01);
     }
 
 }
