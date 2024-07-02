@@ -51,4 +51,15 @@ public class ProcessSaleTest {
         Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  27.5f, 0.01);
     }
 
+    @Test
+    public void testProcessSaleWithShipping() {
+        Customer customer = new Customer("Vitor", CustomerType.STANDARD, RegionType.CENTRO_OESTE,false);
+        ArrayList<Product> products = new ArrayList<>();
+        products.add(new Product(1, "Bola de praia", 22.5, "unidade"));
+        products.add(new Product(2, "Bastão de cola", 5, "unidade"));
+
+
+        Assert.assertEquals(saleService.processSale(customer, products, "19203930291029283"),  40.5f, 0.01);
+    }
+
 }
