@@ -78,6 +78,8 @@ public class SaleService {
             amount+= p.getPrice();
         }
 
+        amount += calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+
         return amount;
     }
 }
