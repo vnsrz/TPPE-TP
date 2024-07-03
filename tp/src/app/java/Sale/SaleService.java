@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SaleService {
 
@@ -80,11 +81,20 @@ public class SaleService {
             amount+= p.getPrice();
         }
 
-        amount -= calculateDiscount(customer.getType(), amount, paymentMethod);
-        amount += calculateTax(customer.getState(), amount);
-        amount += calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
+        amount -= discount;
+        float tax  = calculateTax(customer.getState(), amount);
+        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+        amount += tax + shipping;
 
-        this.addSale(new Sale(Date.from(Instant.now()), customer, products, paymentMethod, amount));
+        Sale sale = new Sale(Date.from(Instant.now()), customer, products, paymentMethod, amount);
+        sale.setDiscount(discount);
+        sale.setTax(tax);
+        sale.setShipping(shipping);
+
+        this.addSale(sale);
+
+        System.out.println(sale);
 
         return amount;
     }

@@ -28,4 +28,11 @@ public class Product {
     public String getUnit() {
         return this.unit;
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + this.getDescription() + " | " +
+                "Valor: " + this.price + "\n";
+    }
+
 }
