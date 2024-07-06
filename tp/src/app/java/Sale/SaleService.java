@@ -1,9 +1,15 @@
 package Sale;
 
+import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
+import product.Product;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class SaleService {
 
@@ -66,5 +72,30 @@ public class SaleService {
         discount += paymentCard.startsWith(STORE_CREDIT_CARD) ? amount * 0.1f : 0;
 
         return discount;
+    }
+
+    public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
+        float amount = 0;
+
+        for(Product p : products){
+            amount+= p.getPrice();
+        }
+
+        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
+        amount -= discount;
+        float tax  = calculateTax(customer.getState(), amount);
+        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+        amount += tax + shipping;
+
+        Sale sale = new Sale(Date.from(Instant.now()), customer, products, paymentMethod, amount);
+        sale.setDiscount(discount);
+        sale.setTax(tax);
+        sale.setShipping(shipping);
+
+        this.addSale(sale);
+
+        System.out.println(sale);
+
+        return amount;
     }
 }

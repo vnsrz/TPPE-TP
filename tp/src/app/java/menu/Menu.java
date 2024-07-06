@@ -1,11 +1,16 @@
 package menu;
 
 
+import java.sql.Date;
+import java.time.Instant;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Sale.Sale;
+import Sale.SaleService;
 import customer.Customer;
 import customer.CustomerType;
 
@@ -18,12 +23,16 @@ import utils.Resources;
 public class Menu {
     private final List<Customer> customers;
     private final List<Product> products;
+    private final SaleService saleService;
 
+    private static final String CARTAO_FAKE = "8390291829384948";
+    private static final String CARTAO_LOJA_FAKE = "4296131829384948";
     public Menu() {
         customers = new ArrayList<>();
         seedCustomers();
         products = new ArrayList<>();
         seedProducts();
+        saleService = new SaleService();
     }
 
     private void seedCustomers() {
@@ -66,6 +75,7 @@ public class Menu {
             System.out.println("6. Calcular saldo de cashback para clientes prime");
             System.out.println("7. Lista Clientes");
             System.out.println("8. Lista Produtos");
+            System.out.println("9. Lista Vendas");
             System.out.println("0. Sair");
 
             int choice = Resources.readInt("Escolha uma opção");
@@ -78,7 +88,7 @@ public class Menu {
                     registerProduct();
                     break;
                 case 3:
-                    System.out.println("Não implementado");
+                    makeSale();
                     break;
                 case 4:
                     calculateSalesLastMonth();
@@ -94,7 +104,10 @@ public class Menu {
                     break;
                 case 8:
                     listProducts();
-                    break;    
+                    break;
+                case 9:
+                    listSales();
+                    break;
                 case 0:
                     System.out.println("Saindo do sistema...");
                     return;
@@ -127,11 +140,22 @@ public class Menu {
                 yield CustomerType.STANDARD;
             }
         };
-
-        RegionType state = RegionType.CENTRO_OESTE;
+        int regionChoice = Resources.readInt("Tipo (1 - Norte, 2 - Nordeste, 3 - Centro Oeste, 4 - Sudeste, 5 - SUL, 6 -> DISTRITO FEDERAL)");
+        RegionType regionType = switch (regionChoice) {
+            case 1 -> RegionType.NORTE;
+            case 2 -> RegionType.NORDESTE;
+            case 3 -> RegionType.CENTRO_OESTE;
+            case 4 -> RegionType.SUDESTE;
+            case 5 -> RegionType.SUL;
+            case 6 -> RegionType.DISTRITO_FEDERAL;
+            default -> {
+                System.out.println("Tipo inválido. Será cadastrado como padrão.");
+                yield RegionType.DISTRITO_FEDERAL; // Alterar
+            }
+        };
         boolean isCapital = Resources.readBoolean("É capital? (0 - Sim / 1 - Não)");
 
-        Customer newCustomer = new Customer(name, type, state, isCapital);
+        Customer newCustomer = new Customer(name, type, regionType, isCapital);
         customers.add(newCustomer);
 
         System.out.println("Cliente cadastrado com sucesso!");
@@ -148,7 +172,7 @@ public class Menu {
         String description = Resources.readString("Descrição");
         double price = Resources.readDouble("Preço");
         String unit = Resources.readString("Unidade");
-        
+
         Product newProduct = new Product(code, description, price, unit);
         products.add(newProduct);
 
@@ -189,6 +213,99 @@ public class Menu {
         }
     }
 
+    private void makeSale() {
+        System.out.println("\nRealizando Venda:");
+
+        ArrayList<Product> productList = selectProducts();
+
+        if(productList.isEmpty()) {
+            System.out.println("Nenhum Produto Selecionado! Retornando...");
+            return;
+        }
+
+        int codCustomer = selectCustomer();
+        if(codCustomer == 0) System.out.println("COMPRA CANCELADA!");
+        Optional<Customer> customer = findCustomer(codCustomer);
+
+        String paymentMethod = selectPaymentMethod();
+        if(paymentMethod.equals("0")) return;
+
+        float result = saleService.processSale(customer.get(),productList, paymentMethod);
+
+        System.out.println("\nVenda Adicionada com sucesso!");
+    }
+
+    private ArrayList selectProducts() {
+
+        listProducts();
+
+        int codProduct;
+        ArrayList<Product> productList = new ArrayList<>();
+        do {
+            codProduct = Resources.readInt("Digite o codigo do produto (ou 0 para finalizar):");
+
+            if(codProduct == 0) break;
+
+            Optional<Product> product;
+            if(hasProductWithCode(codProduct)) {
+                product = findProduct(codProduct);
+                productList.add(product.get());
+                System.out.println("Produto adicionado ao carrinho!");
+            } else {
+                System.out.println("Codigo Invalido!");
+            }
+
+        } while (true);
+
+        return productList;
+    }
+
+    private int selectCustomer() {
+        listCustomers();
+
+        int codCustomer;
+        do {
+            codCustomer = Resources.readInt("Digite o codigo do Cliente (0 para cancelar)");
+
+            if(codCustomer == 0 || hasCustomer(codCustomer)) break;
+
+            System.out.println("Cliente não encontrado! Tente novamente");
+
+        } while (true);
+
+        return codCustomer;
+    }
+
+    private String selectPaymentMethod() {
+        String paymentMethod;
+        do {
+            paymentMethod = Resources.readString("DIGITE O NUMERO DO SEU CARTAO (ou 0 para cancelar a compra)");
+
+
+            //apenas para facilitar na hora de inserir o numero do cartão
+            if(paymentMethod.equals("100")) {
+                return CARTAO_FAKE;
+            } else if (paymentMethod.equals("99")) {
+                return CARTAO_LOJA_FAKE;
+            }
+
+            if(paymentMethod.equals("0")) {
+                System.out.println("COMPRA CANCELADA!");
+                break;
+            } else if(paymentMethod.length() != 16) {
+                System.out.println("CARTAO INVALIDO, DEVE TER 16 DIGITOS!");
+            }
+
+        } while (paymentMethod.length() != 16);
+
+        return paymentMethod;
+    }
+
+    private boolean hasCustomer(int codCustomer) {
+
+        return codCustomer <= customers.size() && codCustomer > 0 && Optional.ofNullable(customers.get(codCustomer-1)).isPresent();
+    }
+
     private void listProducts() {
         System.out.println("\nLista de Produtos:");
 
@@ -205,5 +322,19 @@ public class Menu {
                 System.out.println("------------------------------");
             }
         }
+    }
+
+    private void listSales() {
+        if(saleService.getSales().isEmpty()) System.out.println("Nenhuma Venda Realizada!");
+        System.out.println("VENDAS REALIZADAS: ");
+        saleService.getSales().forEach(sale -> System.out.println(sale.toString() + "-------------------------\n"));
+    }
+
+    private Optional<Product> findProduct(int code) {
+       return products.stream().filter(f -> code == f.getCode()).collect(Collectors.toList()).stream().findFirst();
+    }
+
+    private Optional <Customer> findCustomer(int code) {
+        return Optional.ofNullable(customers.get(code-1));
     }
 }
