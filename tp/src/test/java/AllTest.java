@@ -8,6 +8,7 @@ import org.junit.runners.Suite.SuiteClasses;
         AddSaleTest.class,
         CalculateTaxTest.class,
         CalculateDiscountTest.class,
+        CalculateCashBackTest.class,
         CalculateShippingTest.class,
         CustomerSpecialStatusTest.class,
         CustomerTest.class,
