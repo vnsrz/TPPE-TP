@@ -17,6 +17,7 @@ public class Sale {
     private float discount;
     private float tax;
     private float shipping;
+    private float cashback;
 
     public Sale(Date date, Customer customer, ArrayList<Product> product, String paymentMethod, float amount) {
         this.date = date;
@@ -73,6 +74,10 @@ public class Sale {
     public float getAmount() { return this.amount; }
 
     public void setAmount(float amount) { this.amount = amount; }
+
+    public float getCashback() { return cashback; } 
+
+    public void setCashback(float cashback) { this.cashback = cashback; }
 
     @Override
     public String toString() {

@@ -72,10 +72,9 @@ public class Menu {
             System.out.println("3. Realizar venda");
             System.out.println("4. Calcular vendas do último mês para cada cliente");
             System.out.println("5. Verificar status de cliente especial");
-            System.out.println("6. Calcular saldo de cashback para clientes prime");
-            System.out.println("7. Lista Clientes");
-            System.out.println("8. Lista Produtos");
-            System.out.println("9. Lista Vendas");
+            System.out.println("6. Lista Clientes");
+            System.out.println("7. Lista Produtos");
+            System.out.println("8. Lista Vendas");
             System.out.println("0. Sair");
 
             int choice = Resources.readInt("Escolha uma opção");
@@ -97,15 +96,12 @@ public class Menu {
                     checkSpecialStatus();
                     break;
                 case 6:
-                    System.out.println("Não implementado");
-                    break;
-                case 7:
                     listCustomers();
                     break;
-                case 8:
+                case 7:
                     listProducts();
                     break;
-                case 9:
+                case 8:
                     listSales();
                     break;
                 case 0:
