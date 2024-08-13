@@ -86,6 +86,12 @@ public class SaleService {
 
         return discount;
     }
+    /* 
+    Ao extrair a lógica de cálculo de desconto com base no tipo de cliente e no cartão de pagamento em métodos separados, 
+    estamos aplicando o princípio da responsabilidade única. Isso faz com que o código seja mais modular, 
+    permitindo que cada parte seja entendida, desenvolvida e modificada de maneira independente, 
+    além de melhorar a legibilidade do código, proporcionando uma base sólida para futuras expansões no sistema.
+    */
 
     public float calculateCashback(Customer customer, float amount, String paymentCard) {
         if (!CustomerType.PRIME.equals(customer.getType())) {
