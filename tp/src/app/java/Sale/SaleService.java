@@ -50,17 +50,34 @@ public class SaleService {
         return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f);
     }
 
+    private float calculateCustomerDiscount(CustomerType customerType, float amount) {
+        if (customerType == CustomerType.SPECIAL) {
+            return amount * 0.1f;
+        }
+        return 0;
+    }
+
+    private float calculateCardDiscount(String paymentCard, float amount) {
+        if (paymentCard != null && paymentCard.startsWith(STORE_CREDIT_CARD)) {
+            return amount * 0.1f;
+        }
+        return 0;
+    }
+
     public float calculateDiscount(CustomerType customerType, float amount, String paymentCard) {
         float discount = 0;
 
-        if (CustomerType.SPECIAL.name().equals(customerType.name())) {
-            discount = amount * 0.1f;
-        }
-
-        discount += paymentCard.startsWith(STORE_CREDIT_CARD) ? amount * 0.1f : 0;
+        discount += calculateCustomerDiscount(customerType, amount);
+        discount += calculateCardDiscount(paymentCard, amount);
 
         return discount;
     }
+    /* 
+    Ao extrair a lógica de cálculo de desconto com base no tipo de cliente e no cartão de pagamento em métodos separados, 
+    estamos aplicando o princípio da responsabilidade única. Isso faz com que o código seja mais modular, 
+    permitindo que cada parte seja entendida, desenvolvida e modificada de maneira independente, 
+    além de melhorar a legibilidade do código, proporcionando uma base sólida para futuras expansões no sistema.
+    */
 
     public float calculateCashback(Customer customer, float amount, String paymentCard) {
         if (!CustomerType.PRIME.equals(customer.getType())) {
