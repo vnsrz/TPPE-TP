@@ -8,12 +8,10 @@ import product.Product;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Logger;
 
 public class SaleService {
 
-    private ArrayList<Sale> sales;
+    private final ArrayList<SaleTransaction> sales;
 
     private final String STORE_CREDIT_CARD = "429613";
 
@@ -21,39 +19,25 @@ public class SaleService {
         this.sales = new ArrayList<>();
     }
 
-
-    public void addSale(Sale sale) {
+    public void addSale(SaleTransaction sale) {
         this.sales.add(sale);
     }
 
-    public ArrayList<Sale> getSales() {
+    public ArrayList<SaleTransaction> getSales() {
         return this.sales;
     }
 
     public float calculateShipping(RegionType region, boolean isCapital, CustomerType customerType) {
         if(customerType.name().equals(CustomerType.PRIME.name())) return 0;
 
-        float shippingPrice;
-
-        switch (region) {
-            case CENTRO_OESTE, SUL:
-                shippingPrice = isCapital ? 10 : 13;
-                break;
-            case NORTE:
-                shippingPrice = isCapital? 20 : 25;
-                break;
-            case NORDESTE:
-                shippingPrice = isCapital ? 15 : 18;
-                break;
-            case DISTRITO_FEDERAL:
-                shippingPrice = 5;
-                break;
-            case SUDESTE:
-                shippingPrice = isCapital ? 7 : 10;
-                break;
-            default:
-                shippingPrice = 0;
-        }
+        float shippingPrice = switch (region) {
+            case CENTRO_OESTE, SUL -> isCapital ? 10 : 13;
+            case NORTE -> isCapital ? 20 : 25;
+            case NORDESTE -> isCapital ? 15 : 18;
+            case DISTRITO_FEDERAL -> 5;
+            case SUDESTE -> isCapital ? 7 : 10;
+            default -> 0;
+        };
 
         return isSpecial(customerType) ? shippingPrice * 0.7f : shippingPrice;
     }
@@ -61,23 +45,43 @@ public class SaleService {
     private Boolean isSpecial(CustomerType customerType) { return CustomerType.SPECIAL.name().equals(customerType.name()); }
 
     public float calculateTax(RegionType regionType, float amount) {
-        return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f) ;
+        return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f);
+    }
+
+    private float calculateCustomerDiscount(CustomerType customerType, float amount) {
+        if (customerType == CustomerType.SPECIAL) {
+            return amount * 0.1f;
+        }
+        return 0;
+    }
+
+    private float calculateCardDiscount(String paymentCard, float amount) {
+        if (paymentCard != null && paymentCard.startsWith(STORE_CREDIT_CARD)) {
+            return amount * 0.1f;
+        }
+        return 0;
     }
 
     public float calculateDiscount(CustomerType customerType, float amount, String paymentCard) {
         float discount = 0;
 
-        if (CustomerType.SPECIAL.name().equals(customerType.name())) discount = amount * 0.1f;
-
-        discount += paymentCard.startsWith(STORE_CREDIT_CARD) ? amount * 0.1f : 0;
+        discount += calculateCustomerDiscount(customerType, amount);
+        discount += calculateCardDiscount(paymentCard, amount);
 
         return discount;
     }
+    /*
+    Ao extrair a lógica de cálculo de desconto com base no tipo de cliente e no cartão de pagamento em métodos separados,
+    estamos aplicando o princípio da responsabilidade única. Isso faz com que o código seja mais modular,
+    permitindo que cada parte seja entendida, desenvolvida e modificada de maneira independente,
+    além de melhorar a legibilidade do código, proporcionando uma base sólida para futuras expansões no sistema.
+    */
+
     public float calculateCashback(Customer customer, float amount, String paymentCard) {
         if (!CustomerType.PRIME.equals(customer.getType())) {
             return 0;
         }
-    
+
         float cashbackPerReal = paymentCard.startsWith(STORE_CREDIT_CARD) ? 0.05f : 0.03f;
         return amount * cashbackPerReal;
     }
