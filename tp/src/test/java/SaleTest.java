@@ -1,5 +1,4 @@
-import Sale.PaymentDetails;
-import Sale.SaleTransaction;
+import Sale.Sale;
 import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
@@ -57,13 +56,13 @@ public class SaleTest {
     }
     @Test
     public void testSale() {
-        SaleTransaction sale = new SaleTransaction(testDate, testCustomer,testProduct,new PaymentDetails(testPaymentMethod, amountTest));
+        Sale sale = new Sale(testDate, testCustomer,testProduct,testPaymentMethod, amountTest);
 
         Assert.assertEquals(sale.getDate(), testDate);
         Assert.assertEquals(sale.getCustomer(), testCustomer);
-        Assert.assertEquals(sale.getProducts(), testProduct);
-        Assert.assertEquals(sale.getPaymentDetails().getPaymentMethod(), testPaymentMethod);
-        Assert.assertEquals(sale.getPaymentDetails().getAmount(), amountTest, .01);
+        Assert.assertEquals(sale.getProduct(), testProduct);
+        Assert.assertEquals(sale.getPaymentMethod(), testPaymentMethod);
+        Assert.assertEquals(sale.getAmount(), amountTest, .01);
     }
 
 
