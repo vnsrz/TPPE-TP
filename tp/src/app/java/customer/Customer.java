@@ -8,10 +8,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Customer {
-    private String name;
-    private CustomerType type;
-    private RegionType state;
-    private boolean isCapital;
+    private final String name;
+    private final CustomerType type;
+    private final RegionType state;
+    private final boolean isCapital;
     private final List<Sale> sales;
 
     public Customer(String name, CustomerType type, RegionType state, boolean isCapital) {
@@ -51,6 +51,6 @@ public class Customer {
     }
 
     public boolean isEligibleForSpecial() {
-        return getSalesLastMonth() > 1000.0; // Critério de exemplo para ser especial
+        return getSalesLastMonth() > 1000.0; // Criterion de exemplar para ser especial
     }
 }
