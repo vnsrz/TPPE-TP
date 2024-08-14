@@ -81,36 +81,8 @@ public class SaleService {
         float cashbackPerReal = paymentCard.startsWith(STORE_CREDIT_CARD) ? 0.05f : 0.03f;
         return amount * cashbackPerReal;
     }
-    
 
     public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
-        float amount = 0;
-
-        for(Product p : products){
-            amount+= p.getPrice();
-        }
-
-        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
-        amount -= discount;
-        float tax  = calculateTax(customer.getState(), amount);
-        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
-        amount += tax + shipping;
-
-        float cashback = calculateCashback(customer, amount, paymentMethod);
-
-        Sale sale = new Sale(Date.from(Instant.now()), customer, products, paymentMethod, amount);
-        sale.setDiscount(discount);
-        sale.setTax(tax);
-        sale.setShipping(shipping);
-        sale.setCashback(cashback);
-
-        this.addSale(sale);
-
-        System.out.println(sale);
-        if (cashback > 0) {
-            System.out.printf("Cashback recebido: R$ %.2f%n", cashback); 
-        }
-
-        return amount;
+        return new SaleProcessor(customer, products, paymentMethod, this).processSale();
     }
 }
