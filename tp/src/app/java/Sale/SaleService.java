@@ -86,6 +86,11 @@ public class SaleService {
         return amount * cashbackPerReal;
     }
 
+    /** A lógica do processamento agora está presente na classe SaleProcessor, permitindo que seja testada e alterada de forma única,
+     * facilitando futuras manutenções e a legibilidade do código. Além disso, caso haja necessidade de incluir mais operações durante
+     * o processamento, toda as regras de negócio podem ser incluidas na classe SaleProcessor, sem adicionar maior complexidade na classe
+     * Origem SaleService.
+     **/
     public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
         return new SaleProcessor(customer, products, paymentMethod, this).processSale();
     }

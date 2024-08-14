@@ -12,7 +12,7 @@ public class SaleProcessor {
     private Customer customer;
     private ArrayList<Product> products;
     private String paymentMethod;
-    private SaleService saleService;
+    private final SaleService saleService;
 
     public SaleProcessor(Customer customer, ArrayList<Product> products, String paymentMethod, SaleService saleService) {
         this.customer = customer;
@@ -25,7 +25,7 @@ public class SaleProcessor {
         float amount = 0;
 
         for(Product p : this.products){
-            amount+= p.getPrice();
+            amount+= (float) p.getPrice();
         }
 
         float discount = saleService.calculateDiscount(this.customer.getType(), amount, this.paymentMethod);
@@ -36,11 +36,12 @@ public class SaleProcessor {
 
         float cashback = saleService.calculateCashback(this.customer, amount, this.paymentMethod);
 
-        Sale sale = new Sale(Date.from(Instant.now()), this.customer, this.products, this.paymentMethod, amount);
-        sale.setDiscount(discount);
-        sale.setTax(tax);
-        sale.setShipping(shipping);
-        sale.setCashback(cashback);
+        PaymentDetails paymentDetails = new PaymentDetails(paymentMethod, amount);
+        paymentDetails.setDiscount(discount);
+        paymentDetails.setTax(tax);
+        paymentDetails.setShipping(shipping);
+
+        SaleTransaction sale = new SaleTransaction(Date.from(Instant.now()), customer, products, paymentDetails);
 
         saleService.addSale(sale);
 

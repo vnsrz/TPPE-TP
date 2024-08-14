@@ -1,5 +1,6 @@
-import Sale.Sale;
+import Sale.PaymentDetails;
 import Sale.SaleService;
+import Sale.SaleTransaction;
 import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
@@ -40,17 +41,17 @@ public class AddSaleTest {
         ArrayList<Product> productsA = new ArrayList<>();
         productsA.add(new Product(1, "Bicicleta",300,"unidade"));
         Customer customerA = new Customer("Juliana", CustomerType.STANDARD, RegionType.SUDESTE,false);
-        Sale saleA = new Sale(Date.from(Instant.now()), customerA, productsA, "0234567890123456",300);
+        SaleTransaction saleA = new SaleTransaction(Date.from(Instant.now()), customerA, productsA, new PaymentDetails("0234567890123456",300));
 
         ArrayList<Product> productsB = new ArrayList<>();
         productsB.add(new Product(2,"Camisa",50,"unidade"));
         Customer customerB = new Customer("Adriano", CustomerType.STANDARD, RegionType.DISTRITO_FEDERAL,false);
-        Sale saleB = new Sale(Date.from(Instant.now()), customerB, productsB, "0234567890123456",300);
+        SaleTransaction saleB = new SaleTransaction(Date.from(Instant.now()), customerB, productsB, new PaymentDetails("0234567890123456",300));
 
         ArrayList<Product> productsC = new ArrayList<>();
         productsB.add(new Product(2,"Camisa",50,"unidade"));
         Customer customerC = new Customer("Adriano", CustomerType.STANDARD, RegionType.NORTE,false);
-        Sale saleC = new Sale(Date.from(Instant.now()), customerC, productsC, "0234567890123456", 300);
+        SaleTransaction saleC = new SaleTransaction(Date.from(Instant.now()), customerC, productsC, new PaymentDetails("0234567890123456", 300));
         return new Object[][] {
                 {
                     new Object[] {saleA},
@@ -71,7 +72,7 @@ public class AddSaleTest {
     @Test
     public void testAddSale() {
         for(Object sale : sales) {
-            saleService.addSale((Sale) sale);
+            saleService.addSale((SaleTransaction) sale);
         }
 
         Assert.assertTrue(saleService.getSales().contains(sale));
