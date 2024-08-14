@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class SaleService {
 
-    private final ArrayList<SaleTransaction> sales;
+    private final ArrayList<Sale> sales;
 
     private final String STORE_CREDIT_CARD = "429613";
 
@@ -19,11 +19,11 @@ public class SaleService {
         this.sales = new ArrayList<>();
     }
 
-    public void addSale(SaleTransaction sale) {
+    public void addSale(Sale sale) {
         this.sales.add(sale);
     }
 
-    public ArrayList<SaleTransaction> getSales() {
+    public ArrayList<Sale> getSales() {
         return this.sales;
     }
 
@@ -108,7 +108,7 @@ public class SaleService {
         paymentDetails.setTax(tax);
         paymentDetails.setShipping(shipping);
 
-        SaleTransaction sale = new SaleTransaction(Date.from(Instant.now()), customer, products, paymentDetails);
+        Sale sale = new Sale(Date.from(Instant.now()), customer, products, paymentDetails);
 
         this.addSale(sale);
 
