@@ -1,15 +1,12 @@
 package menu;
 
 
-import java.sql.Date;
-import java.time.Instant;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import Sale.Sale;
 import Sale.SaleService;
 import customer.Customer;
 import customer.CustomerType;
@@ -226,8 +223,6 @@ public class Menu {
         String paymentMethod = selectPaymentMethod();
         if(paymentMethod.equals("0")) return;
 
-        float result = saleService.processSale(customer.get(),productList, paymentMethod);
-
         System.out.println("\nVenda Adicionada com sucesso!");
     }
 
@@ -327,7 +322,7 @@ public class Menu {
     }
 
     private Optional<Product> findProduct(int code) {
-       return products.stream().filter(f -> code == f.getCode()).collect(Collectors.toList()).stream().findFirst();
+       return products.stream().filter(f -> code == f.getCode()).toList().stream().findFirst();
     }
 
     private Optional <Customer> findCustomer(int code) {
