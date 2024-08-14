@@ -4,14 +4,11 @@ import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
 import product.Product;
-
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class SaleService {
 
-    private final ArrayList<SaleTransaction> sales;
+    private final ArrayList<Sale> sales;
 
     private final String STORE_CREDIT_CARD = "429613";
 
@@ -19,11 +16,11 @@ public class SaleService {
         this.sales = new ArrayList<>();
     }
 
-    public void addSale(SaleTransaction sale) {
+    public void addSale(Sale sale) {
         this.sales.add(sale);
     }
 
-    public ArrayList<SaleTransaction> getSales() {
+    public ArrayList<Sale> getSales() {
         return this.sales;
     }
 
@@ -42,7 +39,9 @@ public class SaleService {
         return isSpecial(customerType) ? shippingPrice * 0.7f : shippingPrice;
     }
 
-    private Boolean isSpecial(CustomerType customerType) { return CustomerType.SPECIAL.name().equals(customerType.name()); }
+    private Boolean isSpecial(CustomerType customerType) {
+        return CustomerType.SPECIAL.name().equals(customerType.name());
+    }
 
     public float calculateTax(RegionType regionType, float amount) {
         return RegionType.DISTRITO_FEDERAL.name().equals(regionType.name()) ? (amount * 0.18f) : (amount * 0.16f);
@@ -70,10 +69,10 @@ public class SaleService {
 
         return discount;
     }
-    /*
-    Ao extrair a lógica de cálculo de desconto com base no tipo de cliente e no cartão de pagamento em métodos separados,
-    estamos aplicando o princípio da responsabilidade única. Isso faz com que o código seja mais modular,
-    permitindo que cada parte seja entendida, desenvolvida e modificada de maneira independente,
+    /* 
+    Ao extrair a lógica de cálculo de desconto com base no tipo de cliente e no cartão de pagamento em métodos separados, 
+    estamos aplicando o princípio da responsabilidade única. Isso faz com que o código seja mais modular, 
+    permitindo que cada parte seja entendida, desenvolvida e modificada de maneira independente, 
     além de melhorar a legibilidade do código, proporcionando uma base sólida para futuras expansões no sistema.
     */
 
