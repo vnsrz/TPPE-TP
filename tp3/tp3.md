@@ -78,3 +78,41 @@ Com base na descrição acima, cada grupo de trabalho deverá responder as segui
       - Comentários Excessivos ou Faltantes: Comentários mal utilizados podem indicar que o código não está claro ou que a intenção do programador não é clara.
 
 2. Identifique quais são os maus-cheiros que persistem no trabalho prático 2 do grupo, indicando quais os princípios de bom projeto ainda estão sendo violados e indique quais as operações de refatoração são aplicáveis. **Atenção:** não é necessário aplicar as operações de refatoração, apenas indicar os princípios violados e operações possíveis de serem aplicadas.
+
+Analisando o projeto ainda é possível encontrar maus-cheiros, por exemplo:
+
+- Na classe SaleService o método processSale:
+```java
+public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
+        float amount = 0;
+
+        for(Product p : products){
+            amount += (float) p.getPrice();
+        }
+
+        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
+        amount -= discount;
+        float tax = calculateTax(customer.getState(), amount);
+        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
+        amount += tax + shipping;
+
+        float cashback = calculateCashback(customer, amount, paymentMethod);
+
+        PaymentDetails paymentDetails = new PaymentDetails(paymentMethod, amount);
+        paymentDetails.setDiscount(discount);
+        paymentDetails.setTax(tax);
+        paymentDetails.setShipping(shipping);
+
+        SaleTransaction sale = new SaleTransaction(Date.from(Instant.now()), customer, products, paymentDetails);
+
+        this.addSale(sale);
+
+        System.out.println(sale);
+        if (cashback > 0) {
+            System.out.printf("Cashback recebido: R$ %.2f%n", cashback);
+        }
+
+        return amount;
+    }
+```
+Há um mau-cheiro por ser um Método Longo em relação ao príncipio da Modulariodade. Este método faz várias coisas: calcula o total, aplica descontos, calcula impostos, calcula frete, etc. Seria ideal dividi-lo em métodos menores e mais coesos.
