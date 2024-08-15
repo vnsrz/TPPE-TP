@@ -115,4 +115,4 @@ public float processSale(Customer customer, ArrayList<Product> products, String 
         return amount;
     }
 ```
-Há um mau-cheiro por ser um Método Longo em relação ao príncipio da Modulariodade. Este método faz várias coisas: calcula o total, aplica descontos, calcula impostos, calcula frete, etc. Seria ideal dividi-lo em métodos menores e mais coesos.
+Há um mau-cheiro por ser um Método Longo que fere o príncipio da Modulariodade. Este método faz várias coisas: calcula o total, aplica descontos, calcula impostos, calcula frete, etc. Seria ideal dividi-lo em métodos menores e mais coesos.
