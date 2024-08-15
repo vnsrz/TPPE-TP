@@ -44,38 +44,38 @@ Tudo isso exposto, conclui-se que ter um projeto de software correto, principalm
 Com base na descrição acima, cada grupo de trabalho deverá responder as seguintes perguntas:
 
 1. Para cada um dos princípios de bom projeto de código mencionados acima, apresente sua definição e relacione-o com os maus-cheiros de código apresentados por Fowler em sua obra.
-  - Simplicidade: A simplicidade significa criar um código sem complexidade desnecessária, que faz apenas o que precisa. Um código simples é mais fácil de entender, testar e manter.
-    - Maus-cheiros:
-      - Complexidade Acidental: O código émais complicado do que deveria ser: implementação complicada e/ou funcionalidades desnecessárias;
-      - Códigos longos: Métodos ou classes que fazem muito, podem ser divididos em unidades menores.
-  - Elegância: Um código elegante é aquele que resolve problemas de forma clara e direta, com soluções que parecem naturais para o problema em questão.
-    - Maus-cheiros:
-      - Código Duplicado: Repetir trechos de código;
-      - Código Desnecessário: Presença de código que não contribui diretamente para a funcionalidade.
-  - Modularidade: Divisão do sistema em partes menores, módulos, que podem ser desenvolvidos, testados, e mantidos de forma independente.
-    - Maus-cheiros:
-      - Classes Grandes: Classes que fazem muito podem ser divididas em módulos menores;
-      - Métodos Longos: Métodos que fazem muitas coisas diferentes podem ser quebrados em métodos menores e mais coesos.
-  - Boas Interfaces: Uma boa interface é intuitiva e fácil de usar, fornecendo exatamente o que o cliente precisa sem expor detalhes internos desnecessários.
-    - Maus-cheiros:
-      - Código Ousado:  Quando uma classe usa mais do que deveria de outra classe, isso indica que a interface não está bem definida ou encapsulada;
-      - Invasão de Intimidade: Classes que conhecem muitos detalhes internos de outras classes.
-  - Extensibilidade: Capacidade do sistema de crescer e acomodar novas funcionalidades sem precisar de mudanças significativas no código existente.
-    - Maus-cheiros:
-      - Mudança Divergente: Quando uma alteração em um aspecto do sistema requer modificações em várias classes;
-      - Rigidez: Dificuldade para mudar o sistema é um sinal de que ele não foi projetado para ser extensível.
-  - Evitar Duplicação: Evitar duplicação significa não repetir o mesmo código em vários lugares.
-    - Maus-cheiros:
-      - Código Duplicado: O nome é autoexplicativo;
-      - Shotgun Surgery: Quando uma pequena mudança requer várias modificações em locais diferentes, isso pode indicar que o código foi duplicado em muitos lugares.
-  - Portabilidade: Portabilidade é a capacidade de um sistema de ser executado em diferentes ambientes (por exemplo, sistemas operacionais ou arquiteturas de hardware) sem necessidade de grandes modificações.
-    - Maus-cheiros:
-      - Dependências Externas Excessivas:  Código que depende fortemente de características específicas de um ambiente;
-      - Código Acoplado: Alto acoplamento entre módulos, pois alterações em um módulo podem exigir mudanças em outros.
-  - Código Idiomático e Bem Documentado: Código idiomático segue as convenções e boas práticas da linguagem de programação utilizada. Um código bem documentado é claro e explica suas intenções, facilitando a compreensão.
-    - Maus-cheiros:
-      - Nomes Sem Sentido:  Uso de nomes de variáveis, métodos ou classes que não refletem seu propósito dificulta a compreensão;
-      - Comentários Excessivos ou Faltantes: Comentários mal utilizados podem indicar que o código não está claro ou que a intenção do programador não é clara.
+  - **Simplicidade**: A simplicidade significa criar um código sem complexidade desnecessária, que faz apenas o que precisa. Um código simples é mais fácil de entender, testar e manter.
+    - **Maus-cheiros**:
+      - **Complexidade Acidental:** O código émais complicado do que deveria ser: implementação complicada e/ou funcionalidades desnecessárias;
+      - **Códigos longos:** Métodos ou classes que fazem muito, podem ser divididos em unidades menores.
+  - **Elegância:** Um código elegante é aquele que resolve problemas de forma clara e direta, com soluções que parecem naturais para o problema em questão.
+    - **Maus-cheiros:**
+      - **Código Duplicado:** Repetir trechos de código;
+      - **Código Desnecessário:** Presença de código que não contribui diretamente para a funcionalidade.
+  - **Modularidade:** Divisão do sistema em partes menores, módulos, que podem ser desenvolvidos, testados, e mantidos de forma independente.
+    - **Maus-cheiros:**
+      - **Classes Grandes:** Classes que fazem muito podem ser divididas em módulos menores;
+      - **Métodos Longos:** Métodos que fazem muitas coisas diferentes podem ser quebrados em métodos menores e mais coesos.
+  - **Boas Interfaces:** Uma boa interface é intuitiva e fácil de usar, fornecendo exatamente o que o cliente precisa sem expor detalhes internos desnecessários.
+    - **Maus-cheiros:**
+      - **Código Ousado:**  Quando uma classe usa mais do que deveria de outra classe, isso indica que a interface não está bem definida ou encapsulada;
+      - **Invasão de Intimidade:** Classes que conhecem muitos detalhes internos de outras classes.
+  - **Extensibilidade:** Capacidade do sistema de crescer e acomodar novas funcionalidades sem precisar de mudanças significativas no código existente.
+    - **Maus-cheiros:**
+      - **Mudança Divergente:** Quando uma alteração em um aspecto do sistema requer modificações em várias classes;
+      - **Rigidez:** Dificuldade para mudar o sistema é um sinal de que ele não foi projetado para ser extensível.
+  - **Evitar Duplicação:** Evitar duplicação significa não repetir o mesmo código em vários lugares.
+    - **Maus-cheiros:**
+      - **Código Duplicado:** O nome é autoexplicativo;
+      - **Shotgun Surgery:** Quando uma pequena mudança requer várias modificações em locais diferentes, isso pode indicar que o código foi duplicado em muitos lugares.
+  - **Portabilidade:** Portabilidade é a capacidade de um sistema de ser executado em diferentes ambientes (por exemplo, sistemas operacionais ou arquiteturas de hardware) sem necessidade de grandes modificações.
+    - **Maus-cheiros:**
+      - **Dependências Externas Excessivas:**  Código que depende fortemente de características específicas de um ambiente;
+      - **Código Acoplado:** Alto acoplamento entre módulos, pois alterações em um módulo podem exigir mudanças em outros.
+  - **Código Idiomático e Bem Documentado:** Código idiomático segue as convenções e boas práticas da linguagem de programação utilizada. Um código bem documentado é claro e explica suas intenções, facilitando a compreensão.
+    - **Maus-cheiros:**
+      - **Nomes Sem Sentido:**  Uso de nomes de variáveis, métodos ou classes que não refletem seu propósito dificulta a compreensão;
+      - **Comentários Excessivos ou Faltantes:** Comentários mal utilizados podem indicar que o código não está claro ou que a intenção do programador não é clara.
 
 2. Identifique quais são os maus-cheiros que persistem no trabalho prático 2 do grupo, indicando quais os princípios de bom projeto ainda estão sendo violados e indique quais as operações de refatoração são aplicáveis. **Atenção:** não é necessário aplicar as operações de refatoração, apenas indicar os princípios violados e operações possíveis de serem aplicadas.
 
