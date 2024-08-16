@@ -4,14 +4,11 @@ import customer.Customer;
 import customer.CustomerType;
 import indicator.RegionType;
 import product.Product;
-
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class SaleService {
 
-    private final ArrayList<SaleTransaction> sales;
+    private final ArrayList<Sale> sales;
 
     private final String STORE_CREDIT_CARD = "429613";
 
@@ -19,11 +16,11 @@ public class SaleService {
         this.sales = new ArrayList<>();
     }
 
-    public void addSale(SaleTransaction sale) {
+    public void addSale(Sale sale) {
         this.sales.add(sale);
     }
 
-    public ArrayList<SaleTransaction> getSales() {
+    public ArrayList<Sale> getSales() {
         return this.sales;
     }
 
@@ -89,34 +86,6 @@ public class SaleService {
     }
 
     public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
-        float amount = 0;
-
-        for(Product p : products){
-            amount += (float) p.getPrice();
-        }
-
-        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
-        amount -= discount;
-        float tax = calculateTax(customer.getState(), amount);
-        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
-        amount += tax + shipping;
-
-        float cashback = calculateCashback(customer, amount, paymentMethod);
-
-        PaymentDetails paymentDetails = new PaymentDetails(paymentMethod, amount);
-        paymentDetails.setDiscount(discount);
-        paymentDetails.setTax(tax);
-        paymentDetails.setShipping(shipping);
-
-        SaleTransaction sale = new SaleTransaction(Date.from(Instant.now()), customer, products, paymentDetails);
-
-        this.addSale(sale);
-
-        System.out.println(sale);
-        if (cashback > 0) {
-            System.out.printf("Cashback recebido: R$ %.2f%n", cashback);
-        }
-
-        return amount;
+        return new SaleProcessor(customer, products, paymentMethod, this).processSale();
     }
 }
