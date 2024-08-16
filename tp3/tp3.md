@@ -81,38 +81,57 @@ Com base na descrição acima, cada grupo de trabalho deverá responder as segui
 
 Analisando o projeto ainda é possível encontrar maus-cheiros, por exemplo:
 
-- Na classe SaleService o método processSale:
+- Na classe SaleProcessor o método processSale:
 ```java
-public float processSale(Customer customer, ArrayList<Product> products, String paymentMethod) {
-        float amount = 0;
+public float processSale() {
+    float amount = 0;
 
-        for(Product p : products){
-            amount += (float) p.getPrice();
-        }
+    for(Product p : this.products){
+        amount+= p.getPrice();
+    }
 
-        float discount = calculateDiscount(customer.getType(), amount, paymentMethod);
-        amount -= discount;
-        float tax = calculateTax(customer.getState(), amount);
-        float shipping = calculateShipping(customer.getState(), customer.isCapital(), customer.getType());
-        amount += tax + shipping;
+    float discount = saleService.calculateDiscount(this.customer.getType(), amount, this.paymentMethod);
+    amount -= discount;
+    float tax  = saleService.calculateTax(this.customer.getState(), amount);
+    float shipping = saleService.calculateShipping(this.customer.getState(), this.customer.isCapital(), this.customer.getType());
+    amount += tax + shipping;
 
-        float cashback = calculateCashback(customer, amount, paymentMethod);
+    float cashback = saleService.calculateCashback(this.customer, amount, this.paymentMethod);
 
-        PaymentDetails paymentDetails = new PaymentDetails(paymentMethod, amount);
-        paymentDetails.setDiscount(discount);
-        paymentDetails.setTax(tax);
-        paymentDetails.setShipping(shipping);
+    Sale sale = new Sale(Date.from(Instant.now()), this.customer, this.products, this.paymentMethod, amount);
+    sale.setDiscount(discount);
+    sale.setTax(tax);
+    sale.setShipping(shipping);
+    sale.setCashback(cashback);
 
-        SaleTransaction sale = new SaleTransaction(Date.from(Instant.now()), customer, products, paymentDetails);
+    saleService.addSale(sale);
 
-        this.addSale(sale);
+    System.out.println(sale);
+    if (cashback > 0) {
+        System.out.printf("Cashback recebido: R$ %.2f%n", cashback);
+    }
 
-        System.out.println(sale);
-        if (cashback > 0) {
-            System.out.printf("Cashback recebido: R$ %.2f%n", cashback);
-        }
+    return amount;
+}
+```
+Há um mau-cheiro por ser um Método Longo que fere o príncipio da Modularidade. Este método faz várias coisas: calcula o total, aplica descontos, calcula impostos, calcula frete, etc. Seria ideal dividi-lo em métodos menores e mais coesos.
 
-        return amount;
+* Na classe SaleService método calculateShipping
+```java
+    public float calculateShipping(RegionType region, boolean isCapital, CustomerType customerType) {
+        if(customerType.name().equals(CustomerType.PRIME.name())) return 0;
+
+        float shippingPrice = switch (region) {
+            case CENTRO_OESTE, SUL -> isCapital ? 10 : 13;
+            case NORTE -> isCapital ? 20 : 25;
+            case NORDESTE -> isCapital ? 15 : 18;
+            case DISTRITO_FEDERAL -> 5;
+            case SUDESTE -> isCapital ? 7 : 10;
+            default -> 0;
+        };
+
+        return isSpecial(customerType) ? shippingPrice * 0.7f : shippingPrice;
     }
 ```
-Há um mau-cheiro por ser um Método Longo que fere o príncipio da Modulariodade. Este método faz várias coisas: calcula o total, aplica descontos, calcula impostos, calcula frete, etc. Seria ideal dividi-lo em métodos menores e mais coesos.
+
+O mesmo também fere o principio de modularidade, acumulando responsabilidade que poderia estar em outro método. O trecho de código relacionado ao switch poderia estar encapsulado em uma novo método, simplificando e modularizando esta funcionalidade que retorna o preço do frete.
